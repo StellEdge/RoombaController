@@ -10,4 +10,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+    void BluetoothSend(String tag,String commandline){
+
+    }
+    void BluetoothReceive(String tag,String commandline){
+
+    }
 }

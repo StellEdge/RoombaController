@@ -14,6 +14,6 @@ public class MainActivity extends AppCompatActivity {
         //直接调用这个函数来进行蓝牙数据发送
     }
     void BluetoothReceive(String tag,String commandline){
-        //蓝牙数据接受状况未定
+        //蓝牙数据接受状况未定，
     }
 }

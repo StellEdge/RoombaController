@@ -17,4 +17,4 @@ public class MainActivity extends AppCompatActivity {
         //蓝牙数据接受状况未定，
     }
 }
-//注释
+//注释更好的活动感动

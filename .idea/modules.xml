@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RoombaController.iml" filepath="$PROJECT_DIR$/RoombaController.iml" />
+      <module fileurl="file://E:\java\android-studio\andriodstudio\android2\RoombaController\RoombaController.iml" filepath="E:\java\android-studio\andriodstudio\android2\RoombaController\RoombaController.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\java\android-studio\andriodstudio\android2\RoombaController\app\app.iml" filepath="E:\java\android-studio\andriodstudio\android2\RoombaController\app\app.iml" />
     </modules>
   </component>
 </project>

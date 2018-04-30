@@ -4,16 +4,20 @@ package com.sjtu.cs.roombacontroller;
  * Created by tong on 2018/4/30.
  */
 
-public class location {
+public class Location {
+
     private float x, y;
     private boolean condition;
+
+    public Location() {
+    }
 
     public void update(float x, float y){
         this.x = x;
         this.y = y;
     }
 
-    public void change_condition(boolean condition){
+    public void update_condition(boolean condition){
         this.condition = condition;
     }
 
@@ -27,6 +31,5 @@ public class location {
     public float y(){
         return this.y;
     }
-
 
 }

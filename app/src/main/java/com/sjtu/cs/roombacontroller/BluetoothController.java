@@ -120,7 +120,7 @@ public class BluetoothController{
             if (mSocket != null) {
                 try {
 
-                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(mSocket.getOutputStream())), true);
                     out.println("ROOMBA! OPEN FIRE!");
                     out.flush();
 

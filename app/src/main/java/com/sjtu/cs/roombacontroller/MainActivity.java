@@ -29,11 +29,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
-    }
-
-   void BluetoothSend(String tag,String commandline){
+    private BluetoothController BTC;
+    void BluetoothSend(String tag,String commandline){
+        BTC.SendMsg(commandline);
+        //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
     }
     void BluetoothReceive(String tag,String commandline){

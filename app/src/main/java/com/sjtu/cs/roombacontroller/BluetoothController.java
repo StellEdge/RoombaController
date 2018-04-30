@@ -4,82 +4,54 @@ package com.sjtu.cs.roombacontroller;
  * Created by StellEdge on 2018/4/27.
  */
 import android.support.v7.app.AppCompatActivity;
-import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
-import android.bluetooth.BluetoothGattService;
+import android.bluetooth.BluetoothSocket;
+
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Binder;
-import android.os.IBinder;
 import android.util.Log;
 
-//蓝牙是我们的施工地点--StellEdge：下面代码框架来自网络，仅供测试。
+import java.util.Set;
+import java.util.UUID;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+//蓝牙是我们的施工地点--StellEdge。
 
 public class BluetoothController{
+    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
     private BluetoothAdapter mAdapter;
-    /**做成Service？
-    public static final String TAG = "BluetoothController";
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+    private BluetoothDevice roomba;
+    private BluetoothSocket mSocket;
+    private PrintWriter out;
+    private BufferedReader in;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.w(TAG, "in onCreate");
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.w(TAG, "in onStartCommand");
-        Log.w(TAG, "MyService:" + this);
-        String name = intent.getStringExtra("name");
-        Log.w(TAG, "name:" + name);
-        return START_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.w(TAG, "in onDestroy");
-    }
     public BluetoothController(){
         mAdapter = BluetoothAdapter.getDefaultAdapter();
-    }
-
-     * 判断当前设备是否支持蓝牙
-     * @return
-     */
+    }/*构造函数*/
     public boolean isSupportBluetooth(){
         if(mAdapter!=null){
             return true;
         }
         return false;
-    }
+    }/*蓝牙支持？*/
 
-    /**
-     * 获取蓝牙的状态
-     * @return
-     */
-    public boolean getBluetoothStatus(){
+    public boolean isBluetoothEnabled(){
         if(mAdapter!=null){
             return mAdapter.isEnabled();
         }
         return false;
-    }
-
+    }/* 蓝牙是否打开？*/
     /**
      * 打开蓝牙
-     * @param activity
-     * @param requestCode
+     * @param activity 是一个AppCompatActivity对象
+     * @param requestCode 作为onActivityResult()的返回值
      */
     public void turnOnBluetooth(AppCompatActivity activity,int requestCode){
         if(mAdapter!=null&&!mAdapter.isEnabled()) {
@@ -90,11 +62,81 @@ public class BluetoothController{
 
     /**
      * 关闭蓝牙
-     */
+     *///
     public void turnOffBluetooth(){
         if(mAdapter!=null&&mAdapter.isEnabled()) {
             mAdapter.disable();
         }
     }
+    /* 获取已经配对的设备,返回一个set集合*/
+    public Set<BluetoothDevice> getConnetedDevices() {
+        if (mAdapter != null && mAdapter.isEnabled()) {
+            return mAdapter.getBondedDevices();
+        }
+        return null;
+    }
+    public void startClient() {
+        if (roomba != null) {
+            new Thread(new ConnectThread(roomba)).start();
+        }
+    }
+
+    public boolean SendMsg(String msg){
+        if (mSocket != null) {
+            out.println(msg);
+            out.flush();
+            return true;
+        }return false;
+    }
+
+    private class ConnectThread extends Thread{//单独的连接线程
+        private BluetoothDevice mDevice;
+        public ConnectThread(BluetoothDevice device){
+            BluetoothSocket temp = null;
+            mDevice = device;
+            try {
+                temp = mDevice.createRfcommSocketToServiceRecord(MY_UUID);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mSocket = temp;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            mAdapter.cancelDiscovery();//取消当前搜索
+            try {
+                //通过socket连接设备，这是一个阻塞操作，知道连接成功或发生异常
+                mSocket.connect();
+            } catch (IOException e) {
+                //无法连接，关闭socket并且退出
+                try {
+                    mSocket.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (mSocket != null) {
+                try {
+
+                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                    out.println("ROOMBA! OPEN FIRE!");
+                    out.flush();
+
+                    in = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
+                    String str = in.readLine();
+                } catch (Exception e) {
+                }
+            }
+        }
+
+        public void cancel() {
+            try {
+                mSocket.close();
+            } catch (IOException e) { }
+        }/* 取消正在进行的链接，关闭socket */
+    }
 }
+
 //hello world

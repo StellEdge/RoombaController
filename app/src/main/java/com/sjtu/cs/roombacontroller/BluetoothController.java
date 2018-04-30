@@ -119,13 +119,13 @@ public class BluetoothController{
             }
             if (mSocket != null) {
                 try {
-                    /*
+
                     out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                     out.println("ROOMBA! OPEN FIRE!");
                     out.flush();
 
                     in = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
-                    String str = in.readLine();    示例用*/
+                    String str = in.readLine();
                 } catch (Exception e) {
                 }
             }

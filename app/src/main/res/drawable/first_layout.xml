@@ -9,6 +9,6 @@
         android:right="7dp"
         android:bottom="7dp" />
     <stroke android:width="0dp"
-        android:color="@color/home_color_main" />
+        android:color="#80FF00FF" />
 </shape>
     <!--可视圆域-->

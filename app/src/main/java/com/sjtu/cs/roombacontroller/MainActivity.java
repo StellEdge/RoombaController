@@ -2,7 +2,8 @@ package com.sjtu.cs.roombacontroller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.view.View;
+import android.view.MotionEvent;
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
                  location.x()= event.getX();
-                 =
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;

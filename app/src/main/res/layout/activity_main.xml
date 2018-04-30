@@ -6,13 +6,4 @@
     android:layout_height="match_parent"
     tools:context="com.sjtu.cs.roombacontroller.MainActivity">
 
-    <Button
-        android:id="@+id/change_module"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "change module"
-        />
-
-
-
 </android.support.constraint.ConstraintLayout>

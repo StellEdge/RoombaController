@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("send", "You can text here");
+        Log.d("send", "emmmmm");
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
     }
 
@@ -46,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
     // 这个是我自己为了算数用的函数，真.private，不要调用
 
     private String CirSend(int v, int r){
+        if(r == 0) {
+            r = 1;
+        }
+        if (r>2000) {
+            r = 32768;
+        }
+        if (r<-2000) {
+            r = 32767;
+        }
         String str = "89" + Hexa(v) + Hexa(r);
         str = str.toUpperCase();
         return str;

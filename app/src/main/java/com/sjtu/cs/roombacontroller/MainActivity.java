@@ -117,7 +117,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     private BluetoothController BTC;
     void BluetoothSend(String tag,String commandline){
-        BTC.SendMsg(commandline);
+        //BTC.SendMsg(commandline);
+        Log.d("send", commandline);
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
     }

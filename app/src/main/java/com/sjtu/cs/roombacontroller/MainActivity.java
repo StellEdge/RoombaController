@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         calculate(mlocation);
         BluetoothSend(" ",CirSend(this.speed, this.radius));
         //李桐：这里是给蓝牙传输，tag我用了空字符串
-
         return true;
     }
 

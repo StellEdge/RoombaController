@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
     }
 
-    public boolean onTouchEvent(View view, MotionEvent event) {//李桐：触摸监听，更新mlocation中的坐标
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {//李桐：触摸监听，更新mlocation中的坐标
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: case MotionEvent.ACTION_MOVE:
                 mlocation.update(event.getX(), event.getY());
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         calculate(mlocation);
         BluetoothSend(" ",CirSend(this.speed, this.radius));
         //李桐：这里是给蓝牙传输，tag我用了空字符串
+
         return true;
     }
 

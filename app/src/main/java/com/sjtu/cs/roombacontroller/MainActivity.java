@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 import android.view.MotionEvent;
 import java.lang.Math;
 
@@ -14,7 +13,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     int widthPixels;//litong:屏幕尺寸
     int heightPixels;
     int speed, radius;
-    //int lspeed, rspeed;
 
     Location mlocation = new Location();
 
@@ -54,13 +52,13 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     //李桐：下面是计算速度,对应圆盘操作模式,更新this.speed和this.radius
     private void calculate(Location mlocation){
         double x = mlocation.x() - (this.widthPixels/2);
-        double y = mlocation.y() - (this.heightPixels/2);
+        double y = (this.heightPixels/2) - mlocation.y();
         final double R = this.widthPixels/3;//R is the radius of the visible circle
         double a, r;
 
         if (!mlocation.conditon()){
             this.speed = 0;
-            this.radius = 1;
+            this.radius = 10000;
         }else{
             r = Math.sqrt(x*x+y*y);
             a = -Math.signum(y)*Math.atan(x*1.0/y);
@@ -75,6 +73,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             this.radius =(int)(2000*a/(PI/300));
         }
     }
+
 
     // Created by hd on 2018/4/30.
 

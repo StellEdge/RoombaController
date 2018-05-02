@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
+
     <gradient android:startColor="#FF00F2FF"
         android:endColor="#80FF00FF"
         android:angle="0"/>
+
     <padding android:left="50dp"
         android:top="20dp"
         android:right="7dp"
         android:bottom="7dp" />
+
     <stroke android:width="0dp"
         android:color="#80FF00FF" />
 </shape>

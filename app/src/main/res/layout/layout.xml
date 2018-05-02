@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!--转换按钮-->
+    <Button
+        android:id="@+id/button1"
+        android:text="模式转换"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"/><!--按钮显示在正上方-->
+        />
+
+    <!--可视圆域-->
+    <shape
+        android:shape="oval"
+        android:id="@+id/circle">
+
+        <gradient android:startColor="#FF00F2FF"
+            android:endColor="#80FF00FF"
+            android:angle="0"/>
+
+        <size android:width="match_parent"
+            android:heigth="android:width"/>
+
+        <stroke android:width="0dp"
+            android:color="#80FF00FF" />
+
+        <padding android:bottom="0dp"
+            android:left="0dp" />
+
+    </shape>
+
+
+
+</RelativeLayout>

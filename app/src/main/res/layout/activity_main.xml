@@ -31,7 +31,7 @@
         <!--开始按钮-->
         <Button
         android:id="@+id/button2"
-        android:background="#d2d30ede"
+        android:background="#d29d1fc7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -41,7 +41,7 @@
         <!--结束按钮-->
         <Button
             android:id="@+id/button3"
-            android:background="#d2d30ede"
+            android:background="#d29d1fc7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

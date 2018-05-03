@@ -25,14 +25,15 @@
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:text="模式转换" />
         <!--按钮显示在正上方-->
 
         <!--可视圆域-->
         <shape
             android:id="@+id/circle"
-            android:shape="oval">
+            android:shape="oval"
+            android:visibility="visible">
 
             <gradient
                 android:angle="0"

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 //import java.awt.Button;
+//import java.awt.Shape;
 import java.lang.Math;
 
 import static java.lang.Math.PI;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             public void onClick (View v){
                 Intent intent = new Intent(MainActivity.this, Main2Activity.class);//开启下一项活动
                 startActivity(intent);
+                //Shape circle = (Shape) findViewById(R.id.circle);
+                //v.setVisibility(0);
             }
         });
 

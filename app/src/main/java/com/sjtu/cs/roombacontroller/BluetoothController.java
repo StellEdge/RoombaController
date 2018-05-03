@@ -134,7 +134,7 @@ public class BluetoothController{
         }
     }
     /* 获取已经配对的设备,返回一个set集合*/
-    public Set<BluetoothDevice> getConnetedDevices() {
+    public Set<BluetoothDevice> getConnectedDevices() {
         if (mAdapter != null && mAdapter.isEnabled()) {
             return mAdapter.getBondedDevices();
         }
@@ -142,10 +142,10 @@ public class BluetoothController{
     }
 
     public boolean ConnectToRoomba() {
-        Set<BluetoothDevice> devices=getConnetedDevices();
+        Set<BluetoothDevice> devices=getConnectedDevices();
         for (BluetoothDevice i : devices)
         {
-            if (i.getName() == "HC-06");
+            if (i.getName().equals("HC-06"));
                 roomba = i;
         }
         if (roomba == null)

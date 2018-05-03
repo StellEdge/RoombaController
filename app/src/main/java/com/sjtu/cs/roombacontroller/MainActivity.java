@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         });
 
         Log.d("send", "You can text here");
+        //BTC.start();
         measure();
-        BluetoothSend("","80 89");//李桐：这一行我写的……
+        //BluetoothSend("","80 89");//李桐：这一行我写的……
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
 
     }

@@ -25,7 +25,8 @@
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/textView"
             android:text="模式转换" />
         <!--按钮显示在正上方-->
 
@@ -41,8 +42,8 @@
                 android:startColor="#FF00F2FF" />
 
             <size
-                android:width="50dp"
-                android:height="50dp" />
+                android:width="5sp"
+                android:height="5sp" />
 
             <stroke
                 android:width="0dp"

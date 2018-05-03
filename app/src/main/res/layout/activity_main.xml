@@ -8,15 +8,20 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:text="操控界面" />
 
@@ -25,35 +30,19 @@
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_below="@id/textView"
+            android:layout_centerInParent="true"
             android:text="模式转换" />
         <!--按钮显示在正上方-->
 
         <!--可视圆域-->
-        <shape
-            android:id="@+id/circle"
-            android:shape="oval"
-            android:visibility="visible">
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_centerHrizontal="ture"
+            android:layout_centerVertical="ture"
+            android:src="@drawable/circle"
+            android:scalaType="fitCenter" />
 
-            <gradient
-                android:angle="0"
-                android:endColor="#80FF00FF"
-                android:startColor="#FF00F2FF" />
-
-            <size
-                android:width="5sp"
-                android:height="5sp" />
-
-            <stroke
-                android:width="0dp"
-                android:color="#80FF00FF" />
-
-            <padding
-                android:bottom="0dp"
-                android:left="0dp" />
-
-        </shape>
 
 
     </RelativeLayout>

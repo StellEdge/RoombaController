@@ -22,8 +22,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     Location mlocation = new Location();
 
-
-
+    private BluetoothController BTC = new BluetoothController(this);
 
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
@@ -48,7 +47,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         });
 
         Log.d("send", "You can text here");
-        measure();//李桐：这一行我写的……
+        measure();
+        BluetoothSend("","80 89");//李桐：这一行我写的……
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
 
     }
@@ -145,18 +145,13 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     }
     //这个返回大写十六进制command，对应双轮条形UI界面
 
-    private BluetoothController BTC;
+
     void BluetoothSend(String tag,String commandline){
-        //BTC.SendMsg(commandline);
-        Log.d("send", commandline);
+        BTC.write(commandline);
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
     }
     void BluetoothReceive(String tag,String commandline){
         //蓝牙数据接受状况未定，
     }
-
-
-
-
 }

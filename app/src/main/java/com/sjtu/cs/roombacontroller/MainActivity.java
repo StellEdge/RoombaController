@@ -101,14 +101,20 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         if (r<-2000) {
             r = 32767;
         }
-        String str = "89" + Hexa(v) + Hexa(r);
+        String Hexstrv=Hexa(v);
+        String Hexstrr=Hexa(r);
+        String str = "89 " + Hexstrv.substring(0,2)+" "+Hexstrv.substring(2)
+                +" "+Hexstrr.substring(0,2)+" "+Hexstrr.substring(2);
         str = str.toUpperCase();
         return str;
     }
     //这个返回大写十六进制command，对应圆形UI界面
 
     private String LinSend(int right, int left){
-        String str = "91" + Hexa(right) + Hexa(left);
+        String Hexstrl=Hexa(left);
+        String Hexstrr=Hexa(right);
+        String str = "91" +" "+Hexstrr.substring(0,2)+" "+Hexstrr.substring(2)
+                +" "+Hexstrl.substring(0,2)+" "+Hexstrl.substring(2);
         str = str.toUpperCase();
         return str;
     }

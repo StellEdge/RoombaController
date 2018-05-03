@@ -25,7 +25,7 @@ import java.io.PrintWriter;
 //蓝牙是我们的施工地点--StellEdge。
 
 public class BluetoothController{
-    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private BluetoothAdapter mAdapter;
     private BluetoothDevice roomba;
     private BluetoothSocket mSocket;
@@ -75,6 +75,12 @@ public class BluetoothController{
         }
         return null;
     }
+
+    public boolean Connecttoroomba() {
+        Set<BluetoothDevice> devices=getConnetedDevices();
+        return true;
+    }
+
     public void startClient() {
         if (roomba != null) {
             new Thread(new ConnectThread(roomba)).start();

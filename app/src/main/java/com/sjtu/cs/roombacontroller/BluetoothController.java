@@ -78,6 +78,14 @@ public class BluetoothController{
 
     public boolean Connecttoroomba() {
         Set<BluetoothDevice> devices=getConnetedDevices();
+        for (BluetoothDevice i : devices)
+        {
+            if (i.getName() == "HC-06");
+                roomba = i;
+        }
+        if (roomba == null)
+            return false;
+        startClient();
         return true;
     }
 

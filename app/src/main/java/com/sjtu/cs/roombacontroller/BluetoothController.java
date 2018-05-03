@@ -69,16 +69,17 @@ public class BluetoothController{
         setState(STATE_LISTEN);
     }
 
-    public void write(byte[] out) {
+    public void write(String out) {
         // Create temporary object
         ConnectedThread r;
+        byte[] bout=out.getBytes("UTF8");
         // Synchronize a copy of the ConnectedThread
         synchronized (this) {
             if (mState != STATE_CONNECTED) return;
             r = mConnectedThread;
         }
         // Perform the write unsynchronized
-        r.write(out);
+        r.write(bout);
     }
 
     private synchronized void setState(int state) {

@@ -1,10 +1,15 @@
 package com.sjtu.cs.roombacontroller;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+
+//import java.awt.Button;
 import java.lang.Math;
 
 import static java.lang.Math.PI;
@@ -15,6 +20,9 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     int speed, radius;
 
     Location mlocation = new Location();
+
+
+
 
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
@@ -27,9 +35,19 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button button1 = (Button) findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v){
+                Intent intent = new Intent(MainActivity.this, Main2Activity.class);//开启下一项活动
+                startActivity(intent);
+            }
+        });
+
         Log.d("send", "You can text here");
         measure();//李桐：这一行我写的……
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
+
     }
 
     @Override
@@ -42,6 +60,10 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             case MotionEvent.ACTION_UP:
                 mlocation.update_condition(false);
         }
+    /**
+     * Called when the user touches the button
+     */
+
 
         calculate(mlocation);
         BluetoothSend(" ",CirSend(this.speed, this.radius));
@@ -130,4 +152,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     void BluetoothReceive(String tag,String commandline){
         //蓝牙数据接受状况未定，
     }
+
+
+
+
 }

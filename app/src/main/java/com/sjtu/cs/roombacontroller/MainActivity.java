@@ -3,7 +3,6 @@ package com.sjtu.cs.roombacontroller;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -48,8 +47,10 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         });
 
         Log.d("send", "You can text here");
-        measure();//李桐：这一行我写的……
+        measure();
+        BluetoothSend("","80 89");//李桐：这一行我写的……
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
+
     }
 
     @Override
@@ -146,9 +147,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
 
     void BluetoothSend(String tag,String commandline){
-        //BTC.SendMsg(commandline);
         BTC.write(commandline);
-        Log.d("send", commandline);
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
     }

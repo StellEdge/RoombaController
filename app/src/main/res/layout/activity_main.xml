@@ -26,7 +26,27 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textView"
             android:text="模式转换" />
-        <!--按钮显示在正上方-->
+        <!--转换按钮显示在正上方-->
+
+        <!--开始按钮-->
+        <Button
+        android:id="@+id/button2"
+        android:background="#d2d30ede"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="开始清扫" />
+
+        <!--结束按钮-->
+        <Button
+            android:id="@+id/button3"
+            android:background="#d2d30ede"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="结束清扫" />
 
         <!--可视圆域-->
         <ImageView

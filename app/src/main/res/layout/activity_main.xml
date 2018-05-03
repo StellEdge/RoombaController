@@ -15,9 +15,8 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:text="操控界面" />
 
         <!--转换按钮-->
@@ -25,35 +24,15 @@
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_below="@id/textView"
             android:text="模式转换" />
         <!--按钮显示在正上方-->
 
         <!--可视圆域-->
-        <shape
-            android:id="@+id/circle"
-            android:shape="oval"
-            android:visibility="visible">
-
-            <gradient
-                android:angle="0"
-                android:endColor="#80FF00FF"
-                android:startColor="#FF00F2FF" />
-
-            <size
-                android:width="5sp"
-                android:height="5sp" />
-
-            <stroke
-                android:width="0dp"
-                android:color="#80FF00FF" />
-
-            <padding
-                android:bottom="0dp"
-                android:left="0dp" />
-
-        </shape>
+        <ImageView
+            android:id="@+id/image_view"
+            android:src="@drawable/circle"
+            android:scaleType="fitCenter"/>
 
 
     </RelativeLayout>

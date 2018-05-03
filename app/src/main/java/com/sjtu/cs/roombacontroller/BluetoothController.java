@@ -29,7 +29,7 @@ import java.io.OutputStream;
 public class BluetoothController{
     private static final String TAG = "BluetoothController";
     private static final boolean D = true;
-
+    //98 D3 32 70 C5 6D
     // Name for the SDP record when creating server socket
     private static final String NAME = "BluetoothChat";
 
@@ -72,7 +72,7 @@ public class BluetoothController{
     public void write(String out) {
         // Create temporary object
         ConnectedThread r;
-        byte[] bout=out.getBytes("UTF8");
+        byte[] bout=out.getBytes();
         // Synchronize a copy of the ConnectedThread
         synchronized (this) {
             if (mState != STATE_CONNECTED) return;

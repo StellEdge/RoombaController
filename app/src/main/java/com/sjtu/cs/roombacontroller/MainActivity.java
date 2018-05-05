@@ -45,11 +45,23 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 //v.setVisibility(0);
             }
         });
-
-        Log.d("send", "You can text here");
+        Button button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothSend("", "90 7F 00 7F");
+                }
+        });
+        Button button3 = (Button) findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothSend("", "00 00 00 00");
+            }
+        });
         //BTC.start();
         measure();
-        //BluetoothSend("","80 89");//李桐：这一行我写的……
+        BluetoothSend("","80 89");//李桐：这一行我写的……
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
 
     }
@@ -148,6 +160,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
 
     void BluetoothSend(String tag,String commandline){
+        Log.d("send", commandline);
         BTC.write(commandline);
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送

@@ -52,7 +52,7 @@ public class BluetoothController{
     }/*构造函数*/
 
     public synchronized void start() {
-        if (D) Log.d(TAG, "start");
+        if (D) Log.d("send", "start");
 
         // Cancel any thread attempting to make a connection
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
@@ -65,7 +65,12 @@ public class BluetoothController{
             mAcceptThread = new AcceptThread();
             mAcceptThread.start();
         }*/
-        ConnectToRoomba();
+        boolean flag = ConnectToRoomba();
+        if (flag == false)
+        {
+            Log.d("send", "No BlueTooth");
+            return;
+        }
         setState(STATE_LISTEN);
     }
 
@@ -83,7 +88,7 @@ public class BluetoothController{
     }
 
     private synchronized void setState(int state) {
-        if (D) Log.d(TAG, "setState() " + mState + " -> " + state);
+        if (D) Log.d("send", "setState() " + mState + " -> " + state);
         mState = state;
     }
 
@@ -143,11 +148,17 @@ public class BluetoothController{
 
     public boolean ConnectToRoomba() {
         Set<BluetoothDevice> devices=getConnectedDevices();
+        if (devices == null)
+        {
+            Log.d("send", "No BlueToothDeviceFound");
+            return false;
+        }
         for (BluetoothDevice i : devices)
         {
             if (i.getName().equals("HC-06"));
                 roomba = i;
         }
+        Log.d("send", "here");
         if (roomba == null)
             return false;
         connect(roomba);
@@ -177,7 +188,7 @@ public class BluetoothController{
      * @param device  The BluetoothDevice that has been connected
      */
     public synchronized void connected(BluetoothSocket socket, BluetoothDevice device) {
-        if (D) Log.d(TAG, "connected");
+        if (D) Log.d("send", "connected");
 
         // Cancel the thread that completed the connection
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}

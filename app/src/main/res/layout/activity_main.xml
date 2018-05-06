@@ -48,6 +48,16 @@
             android:layout_alignParentRight="true"
             android:text="结束清扫" />
 
+        <Button
+            android:id="@+id/button4"
+            android:background="#d29d1fc7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="连接HC—06"
+            />
+
         <!--可视圆域-->
         <ImageView
             android:id="@+id/image_view"

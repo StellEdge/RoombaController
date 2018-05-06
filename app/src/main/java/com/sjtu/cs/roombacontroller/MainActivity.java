@@ -59,11 +59,19 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 BluetoothSend("", "00 00 00 00");
             }
         });
+        Button button4 = (Button) findViewById(R.id.button4);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (BTC.getState()!=BTC.STATE_CONNECTED){
+                    BTC.start();
+                }
+            }
+        });
         measure();
-        BluetoothSend("","80 89");//李桐：这一行我写的……
         BTC.start();
+        BluetoothSend("","80 89");//李桐：这一行我写的……
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
-
     }
 
     @Override

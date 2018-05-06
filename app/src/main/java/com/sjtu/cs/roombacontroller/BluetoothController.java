@@ -155,7 +155,7 @@ public class BluetoothController{
         }
         for (BluetoothDevice i : devices)
         {
-            if (i.getName().equals("HC-06"));
+            if (i.getAddress().equals("98:D3:32:70:C5:6D"));
                 roomba = i;
         }
         Log.d("send", "here");

@@ -22,15 +22,26 @@
         <!--转换按钮-->
         <Button
             android:id="@+id/button1"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="模式转换" />
         <!--转换按钮显示在正上方android:layout_below="@id/textView"-->
 
-        <!--全速吸气按钮-->
+        <!--连接蓝牙-->
         <Button
             android:id="@+id/button4"
+            android:background="#41bcff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button1"
+            android:layout_centerHrizontal="true"
+            android:text="连接蓝牙" />
+
+        <!--全速吸气按钮-->
+        <Button
+            android:id="@+id/button8"
             android:background="#8cb324"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/button4"
+            android:layout_toRightOf="@+id/button8"
             android:text="半速吸气" />
         <!--android:layout_toRightOf="button4"-->
 
@@ -65,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/button6"
+            android:layout_alignParentRight="true"
             android:text="关闭吸气" />
 
         <!--开始按钮-->

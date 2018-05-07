@@ -9,7 +9,10 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
 
         <!--TextView
             android:id="@+id/textView"
@@ -22,62 +25,66 @@
         <!--转换按钮-->
         <Button
             android:id="@+id/button1"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="模式转换" />
+            android:text="模式转换"
+            android:layout_weight="50"/>
         <!--转换按钮显示在正上方android:layout_below="@id/textView"-->
 
         <!--连接蓝牙-->
         <Button
             android:id="@+id/button4"
             android:background="#41bcff"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button1"
-            android:layout_centerHrizontal="true"
-            android:text="连接蓝牙" />
+            android:layout_alignParentTop="true"
+            android:text="连接蓝牙"
+            android:layout_weight="50"/>
 
         <!--全速吸气按钮-->
         <Button
             android:id="@+id/button8"
             android:background="#8cb324"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:text="全速吸气" />
+            android:text="全速吸气"
+            android:layout_weight="25"/>
 
         <!--半速吸气按钮-->
         <Button
             android:id="@+id/button5"
             android:background="#a6dc13"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/button8"
-            android:text="半速吸气" />
+            android:text="半速吸气"
+            android:layout_weight="25"/>
         <!--android:layout_toRightOf="button4"-->
 
         <!--0.2速吸气按钮-->
         <Button
             android:id="@+id/button6"
             android:background="#bbff00"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/button5"
-            android:text="0.2速吸气" />
+            android:text="0.2速吸气"
+            android:layout_weight="25"/>
 
-        <!--关闭吸气-->
+        <!--关闭吸气android:layout_alignParentRight="true"-->
         <Button
             android:id="@+id/button7"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/button6"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="关闭吸气" />
+            android:text="关闭吸气"
+            android:layout_weight="25"/>
 
         <!--开始按钮-->
         <Button

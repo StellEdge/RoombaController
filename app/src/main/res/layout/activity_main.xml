@@ -11,22 +11,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <!--TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="操控界面" />
+            android:text="操控界面" /-->
 
         <!--转换按钮-->
         <Button
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView"
+            android:layout_alignParentTop="true"
             android:text="模式转换" />
-        <!--转换按钮显示在正上方-->
+        <!--转换按钮显示在正上方android:layout_below="@id/textView"-->
+
+        <!--全速吸气按钮-->
+        <Button
+            android:id="@+id/button4"
+            android:background="#8cb324"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="全速吸气" />
+
+        <!--半速吸气按钮-->
+        <Button
+            android:id="@+id/button5"
+            android:background="#a6dc13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/button4"
+            android:text="半速吸气" />
+        <!--android:layout_toRightOf="button4"-->
+
+        <!--0.2速吸气按钮-->
+        <Button
+            android:id="@+id/button6"
+            android:background="#bbff00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/button5"
+            android:text="0.2速吸气" />
+
+        <!--关闭吸气-->
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/button6"
+            android:text="关闭吸气" />
 
         <!--开始按钮-->
         <Button
@@ -34,7 +74,7 @@
         android:background="#d29d1fc7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/button1"
         android:layout_alignParentLeft="true"
         android:text="开始清扫" />
 
@@ -44,19 +84,11 @@
             android:background="#d29d1fc7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/button1"
             android:layout_alignParentRight="true"
             android:text="结束清扫" />
 
-        <Button
-            android:id="@+id/button4"
-            android:background="#d29d1fc7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="连接到HC—06"
-            />
+
 
         <!--可视圆域-->
         <ImageView
@@ -65,6 +97,9 @@
             android:scaleType="fitCenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+
+
 
 
     </RelativeLayout>

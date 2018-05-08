@@ -80,14 +80,42 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 00 7F");
+                BluetoothSend("", "90 7F 7F 00");
                 }
         });
         Button button3 = (Button) findViewById(R.id.button3);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "00 00 00 00");
+                BluetoothSend("", "90 00 00 00");
+            }
+        });
+        Button button5 = (Button) findViewById(R.id.button5);
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothSend("", "90 7F 7F 40");
+            }
+        });
+        Button button6 = (Button) findViewById(R.id.button6);
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothSend("", "90 7F 7F 19");
+            }
+        });
+        Button button7 = (Button) findViewById(R.id.button7);
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothSend("", "90 7F 7F 00");
+            }
+        });
+        Button button8 = (Button) findViewById(R.id.button8);
+        button8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothSend("", "90 7F 7F 7F");
             }
         });
         Button button4 = (Button) findViewById(R.id.button4);

@@ -14,6 +14,9 @@ import android.widget.Button;
 import java.lang.Math;
 
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
+import app.akexorcist.bluetotohspp.library.BluetoothState;
+import app.akexorcist.bluetotohspp.library.DeviceList;
+import app.akexorcist.bluetotohspp.library.BluetoothService;
 
 import static java.lang.Math.PI;
 
@@ -26,6 +29,9 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     //private BluetoothController BTC = new BluetoothController(this);
     private BluetoothSPP bt = new BluetoothSPP(this); //暂时先用着这个外部库吧
+    private boolean BTavailable;
+    private String BT="Bluetooth";
+
 
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
@@ -38,19 +44,27 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if(!bt.isBluetoothAvailable()) {
+            BTavailable=false;
+            Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
             // any command for bluetooth is not available
         } else {
+            Log.d(BT, "onCreate: Has Bluetooth");
+            Intent intent = new Intent(getApplicationContext(), DeviceList.class);
+            startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
             if(!bt.isBluetoothEnabled()) {
                 // Do somthing if bluetooth is disable
             } else {
                 // Do something if bluetooth is already enable
             }
         }
+        //文本接收
 
-
-
+        bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
+            public void onDataReceived(byte[] data, String message) {
+                // Do something when data incoming
+            }
+        });
 
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -80,9 +94,12 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // if (BTC.getState()!=BTC.STATE_CONNECTED){
-                //    BTC.start();
-                //}
+                if (BTavailable){
+                    Intent intent = new Intent(getApplicationContext(), DeviceList.class);
+                    startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
+                } else {
+                    Log.d(BT, "onClick: NO BLUETOOTH SUPPORT");
+                }
             }
         });
         measure();
@@ -91,6 +108,22 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
+            if(resultCode == AppCompatActivity.RESULT_OK)
+                bt.connect(data);
+        } else if(requestCode == BluetoothState.REQUEST_ENABLE_BT) {
+            if(resultCode == AppCompatActivity.RESULT_OK) {
+                bt.setupService();
+                //bt.startService(BluetoothState.DEVICE_ANDROID);这里用的是HC-06
+                bt.startService(BluetoothState.DEVICE_OTHER);
+                //setup();
+            } else {
+                // Do something if user doesn't choose any device (Pressed back)
+            }
+        }
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {//李桐：触摸监听，更新mlocation中的坐标
         switch(event.getAction()){
@@ -189,8 +222,10 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         //BTC.write(commandline);
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
-    }
-    void BluetoothReceive(String tag,String commandline){
-        //蓝牙数据接受状况未定，
+        //If you want to send any data. boolean parameter is mean that data will send with ending by LF and CR or not.
+        //If yes your data will added by LF & CR 末尾添加回车或换行
+        if (bt.isServiceAvailable()) {
+            bt.send(commandline, false);
+        }
     }
 }

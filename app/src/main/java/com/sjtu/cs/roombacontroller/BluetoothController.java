@@ -60,17 +60,18 @@ public class BluetoothController{
         // Cancel any thread currently running a connection
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 
-        /*// Start the thread to listen on a BluetoothServerSocket
+        // Start the thread to listen on a BluetoothServerSocket
         if (mAcceptThread == null) {
             mAcceptThread = new AcceptThread();
             mAcceptThread.start();
-        }*/
+        }
+        /*
         boolean flag = ConnectToRoomba();
         if (flag == false)
         {
             Log.d("send", "No BlueTooth");
             return;
-        }
+        }*/
         setState(STATE_LISTEN);
     }
 

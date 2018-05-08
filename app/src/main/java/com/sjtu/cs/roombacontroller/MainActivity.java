@@ -13,6 +13,8 @@ import android.widget.Button;
 //import java.awt.Shape;
 import java.lang.Math;
 
+import app.akexorcist.bluetotohspp.library.BluetoothSPP;
+
 import static java.lang.Math.PI;
 
 public class MainActivity extends AppCompatActivity {///李桐：希望我们能弄个text输出一下当前速度和半径
@@ -22,7 +24,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     Location mlocation = new Location();
 
-    private BluetoothController BTC = new BluetoothController(this);
+    //private BluetoothController BTC = new BluetoothController(this);
+    private BluetoothSPP bt = new BluetoothSPP(this); //暂时先用着这个外部库吧
 
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
@@ -35,6 +38,20 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(!bt.isBluetoothAvailable()) {
+            // any command for bluetooth is not available
+        } else {
+            if(!bt.isBluetoothEnabled()) {
+                // Do somthing if bluetooth is disable
+            } else {
+                // Do something if bluetooth is already enable
+            }
+        }
+
+
+
+
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,13 +80,13 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (BTC.getState()!=BTC.STATE_CONNECTED){
-                    BTC.start();
-                }
+               // if (BTC.getState()!=BTC.STATE_CONNECTED){
+                //    BTC.start();
+                //}
             }
         });
         measure();
-        BTC.start();
+        //BTC.start(); 旧东西统统爆破了
         BluetoothSend("","80 83");//李桐：这一行我写的……
         // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
     }
@@ -169,7 +186,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     void BluetoothSend(String tag,String commandline){
         Log.d("send", commandline);
-        BTC.write(commandline);
+        //BTC.write(commandline);
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
     }

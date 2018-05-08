@@ -1,7 +1,10 @@
 package com.sjtu.cs.roombacontroller;
 
+import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -20,7 +23,7 @@ import app.akexorcist.bluetotohspp.library.BluetoothService;
 
 import static java.lang.Math.PI;
 
-public class MainActivity extends AppCompatActivity {///李桐：希望我们能弄个text输出一下当前速度和半径
+public class MainActivity extends Activity {///李桐：希望我们能弄个text输出一下当前速度和半径
     int widthPixels;//litong:屏幕尺寸
     int heightPixels;
     int speed, radius;
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     private BluetoothSPP bt = new BluetoothSPP(this); //暂时先用着这个外部库吧
     private boolean BTavailable;
     private String BT="Bluetooth";
-
+    private Context mContext=MainActivity.this;
 
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
@@ -49,8 +52,9 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
             // any command for bluetooth is not available
         } else {
+            BTavailable=true;
             Log.d(BT, "onCreate: Has Bluetooth");
-            Intent intent = new Intent(getApplicationContext(), DeviceList.class);
+            Intent intent = new Intent(mContext, DeviceList.class);
             startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
             if(!bt.isBluetoothEnabled()) {
                 // Do somthing if bluetooth is disable
@@ -59,7 +63,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         }
         //文本接收
-
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
             public void onDataReceived(byte[] data, String message) {
                 // Do something when data incoming
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v){
-                Intent intent = new Intent(MainActivity.this, Main2Activity.class);//开启下一项活动
+                Intent intent = new Intent(mContext, Main2Activity.class);//开启下一项活动
                 startActivity(intent);
                 //Shape circle = (Shape) findViewById(R.id.circle);
                 //v.setVisibility(0);
@@ -122,8 +125,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (BTavailable){
-                    Intent intent = new Intent(getApplicationContext(), DeviceList.class);
+                if (bt.isBluetoothAvailable()){
+                    Intent intent = new Intent(MainActivity.this, DeviceList.class);
                     startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
                 } else {
                     Log.d(BT, "onClick: NO BLUETOOTH SUPPORT");
@@ -138,11 +141,17 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) { //判断数据是否为空
+            return;
+        }
+
         if(requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
-            if(resultCode == AppCompatActivity.RESULT_OK)
+            if(resultCode == Activity.RESULT_OK){
                 bt.connect(data);
+            }
         } else if(requestCode == BluetoothState.REQUEST_ENABLE_BT) {
-            if(resultCode == AppCompatActivity.RESULT_OK) {
+            if(resultCode == Activity.RESULT_OK) {
                 bt.setupService();
                 //bt.startService(BluetoothState.DEVICE_ANDROID);这里用的是HC-06
                 bt.startService(BluetoothState.DEVICE_OTHER);

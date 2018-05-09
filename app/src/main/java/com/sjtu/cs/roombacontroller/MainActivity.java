@@ -3,8 +3,8 @@ package com.sjtu.cs.roombacontroller;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
-//import android.support.v7.app.AppCompatActivity;
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -15,15 +15,15 @@ import android.widget.Button;
 //import java.awt.Button;
 //import java.awt.Shape;
 import java.lang.Math;
-
+/*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 import app.akexorcist.bluetotohspp.library.BluetoothService;
-
+*/
 import static java.lang.Math.PI;
 
-public class MainActivity extends Activity {///李桐：希望我们能弄个text输出一下当前速度和半径
+public class MainActivity extends AppCompatActivity {///李桐：希望我们能弄个text输出一下当前速度和半径
     int widthPixels;//litong:屏幕尺寸
     int heightPixels;
     int speed, radius;
@@ -35,7 +35,7 @@ public class MainActivity extends Activity {///李桐：希望我们能弄个tex
     private boolean BTavailable;
     private String BT="Bluetooth";
     private Context mContext=MainActivity.this;
-
+    private String TAG="Main Activity";
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -54,6 +54,9 @@ public class MainActivity extends Activity {///李桐：希望我们能弄个tex
         } else {
             BTavailable=true;
             Log.d(BT, "onCreate: Has Bluetooth");
+            bt.setupService();
+            //bt.startService(BluetoothState.DEVICE_ANDROID);这里用的是HC-06
+            bt.startService(BluetoothState.DEVICE_OTHER);
             Intent intent = new Intent(mContext, DeviceList.class);
             startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
             if(!bt.isBluetoothEnabled()) {
@@ -147,11 +150,12 @@ public class MainActivity extends Activity {///李桐：希望我们能弄个tex
         }
 
         if(requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
-            if(resultCode == Activity.RESULT_OK){
-                bt.connect(data);
+            if(resultCode == RESULT_OK){
+                String address = data.getExtras().getString(BluetoothState.EXTRA_DEVICE_ADDRESS);
+                bt.connect(address);
             }
         } else if(requestCode == BluetoothState.REQUEST_ENABLE_BT) {
-            if(resultCode == Activity.RESULT_OK) {
+            if(resultCode == RESULT_OK) {
                 bt.setupService();
                 //bt.startService(BluetoothState.DEVICE_ANDROID);这里用的是HC-06
                 bt.startService(BluetoothState.DEVICE_OTHER);
@@ -255,7 +259,7 @@ public class MainActivity extends Activity {///李桐：希望我们能弄个tex
 
 
     void BluetoothSend(String tag,String commandline){
-        Log.d("send", commandline);
+        //Log.d("send", commandline);
         //BTC.write(commandline);
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
@@ -263,6 +267,8 @@ public class MainActivity extends Activity {///李桐：希望我们能弄个tex
         //If yes your data will added by LF & CR 末尾添加回车或换行
         if (bt.isServiceAvailable()) {
             bt.send(commandline, false);
+        }else{
+            Log.d(TAG, "BluetoothSend:No bluetooth connection.");
         }
     }
 }

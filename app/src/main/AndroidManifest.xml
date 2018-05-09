@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".Main2Activity" />
 
-        <activity android:name="app.akexorcist.bluetotohspp.library.DeviceList" />
+        <activity android:name="DeviceList" />
     </application>
 
 </manifest>

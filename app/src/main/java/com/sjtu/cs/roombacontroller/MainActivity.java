@@ -15,6 +15,7 @@ import android.widget.Button;
 //import java.awt.Button;
 //import java.awt.Shape;
 import java.lang.Math;
+import java.lang.Byte;
 /*
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             @Override
             public void onClick(View v) {
                 if (bt.isBluetoothAvailable()){
+                    BluetoothSend("","80 83");
                     Intent intent = new Intent(MainActivity.this, DeviceList.class);
                     startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
                 } else {
@@ -207,7 +209,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                     this.speed = (int) (Math.signum(y) * r * 500 / R);
                 }else this.speed = 0;
             }
-            this.radius =(int)(2000*a/(PI/300));
+            this.radius =(int)(2000*a/(PI/3));
         }
     }
 
@@ -242,6 +244,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         String Hexstrr=Hexa(r);
         String str = "89 " + Hexstrv.substring(0,2)+" "+Hexstrv.substring(2)
                 +" "+Hexstrr.substring(0,2)+" "+Hexstrr.substring(2);
+
         str = str.toUpperCase();
         return str;
     }
@@ -259,16 +262,41 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
 
     void BluetoothSend(String tag,String commandline){
-        //Log.d("send", commandline);
-        //BTC.write(commandline);
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
         //If you want to send any data. boolean parameter is mean that data will send with ending by LF and CR or not.
         //If yes your data will added by LF & CR 末尾添加回车或换行
+        Log.d(TAG, "BluetoothSend: "+commandline);
+        byte[] myb=HexCommandtoByte(commandline.getBytes());
         if (bt.isServiceAvailable()) {
-            bt.send(commandline, false);
+            bt.send(myb, false);
         }else{
             Log.d(TAG, "BluetoothSend:No bluetooth connection.");
         }
+    }
+    public static byte[] HexCommandtoByte(byte[] data) {
+        if (data == null) {
+            return null;
+        }
+        int nLength = data.length;
+
+        String strTemString = new String(data, 0, nLength);
+        String[] strings = strTemString.split(" ");
+        nLength = strings.length;
+        data = new byte[nLength];
+        for (int i = 0; i < nLength; i++) {
+            if (strings[i].length() != 2) {
+                data[i] = 00;
+                continue;
+            }
+            try {
+                data[i] = (byte)Integer.parseInt(strings[i], 16);
+            } catch (Exception e) {
+                data[i] = 00;
+                continue;
+            }
+        }
+
+        return data;
     }
 }

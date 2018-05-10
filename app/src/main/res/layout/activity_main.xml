@@ -28,8 +28,8 @@
         <Button
             android:id="@+id/button1"
             android:layout_width="300px"
-            android:layout_height="150px"
 
+            android:layout_height="150px"
             android:layout_below="@+id/button7"
             android:layout_toStartOf="@+id/button7"
             android:background="@drawable/button1"
@@ -133,10 +133,6 @@
             android:layout_marginLeft="400px"
 
             android:src="@drawable/axis" />
-
-
-
-
     </RelativeLayout>
 
     <android.support.constraint.Guideline

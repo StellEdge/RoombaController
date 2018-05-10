@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sjtu.cs.roombacontroller.MainActivity">
+    tools:context="com.sjtu.cs.roombacontroller.MainActivity"
+    >
+
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="591dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="16dp">
+
+        >
 
 
         <!--TextView
@@ -108,7 +109,11 @@
             android:background="@drawable/button1"
             android:text="结束清扫" />
 
-
+        <ImageView
+            android:id="@+id/image_view3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/background" />
         <!--摇杆外轮廓-->
         <ImageView
             android:id="@+id/image_view1"
@@ -130,6 +135,8 @@
             android:src="@drawable/axis" />
 
 
+
+
     </RelativeLayout>
 
     <android.support.constraint.Guideline
@@ -138,5 +145,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
+
 
 </android.support.constraint.ConstraintLayout>

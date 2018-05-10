@@ -72,7 +72,7 @@ public class DeviceList extends AppCompatActivity {
         scanButton = (Button) findViewById(R.id.button_scan);
         String strScanDevice = getIntent().getStringExtra("scan_for_devices");
         if(strScanDevice == null) 
-        	strScanDevice = "SCAN FOR DEVICES";
+        	strScanDevice = "SCAN FOR DEVICES(HC-06)";
         scanButton.setText(strScanDevice);
         scanButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {

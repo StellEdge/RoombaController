@@ -103,8 +103,7 @@ public class BluetoothService {
     // device : The BluetoothDevice to connect
     // secure : Socket Security type - Secure (true) , Insecure (false)
     public synchronized void connect(BluetoothDevice device) {
-        Log.d(TAG, "connect:----e received.");
-        try{
+        //Log.d(TAG, "connect:----e received.");
             if (mState == BluetoothState.STATE_CONNECTING) {
                 if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
             }
@@ -120,9 +119,6 @@ public class BluetoothService {
             }else{
                 Log.d(TAG, "connect: NULL device received.");
             }
-        }catch (NullPointerException a){
-            Log.e(TAG, "connect: fuck",a );
-        }
         // Cancel any thread attempting to make a connection
     }
 

@@ -141,27 +141,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         });
         measure();
         BluetoothSend("","80 83");
-
-
-        /*private Handler handler = new Handler(){
-            public void handlieMessage(Message msg){
-                teller.setText(temp);
-            }
-        }*/
-
-       /* Handler handler = new Handler(){
-            public void handlerMessage(Message msg){
-                switch (msg.what){
-                    case 1:
-                        String temp = "speed:"+speed+", radius:"+radius;
-                        teller.setText(temp);
-                        break;
-                    default:
-                        break;
-
-                }
-            }
-        };*/
     }
 
     private Handler mhandler = new Handler(){

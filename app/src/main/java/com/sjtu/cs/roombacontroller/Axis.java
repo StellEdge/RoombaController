@@ -7,13 +7,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.support.v7.widget.AppCompatImageView;
+import android.widget.ImageView;
+
+import com.sjtu.cs.roombacontroller.R;
 
 /**
  * Created by StellEdge on 2018/5/10.
  */
 
-public class Axis extends AppCompatImageView {
+public class Axis extends ImageView {
     public float InitX = 500;
     public float InitY = 1080/2;
     private float currentX = InitX;
@@ -35,7 +37,6 @@ public class Axis extends AppCompatImageView {
         init();
     }
     private void init() {
-
         if (bmp == null) {
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.axis);
         }

@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     private Context mContext=MainActivity.this;
     private String TAG="Main Activity";
 
+    //private Axis axis = (Axis)findViewById(R.id.main_Axis);
+
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);

@@ -1,6 +1,5 @@
 package com.sjtu.cs.roombacontroller;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +14,7 @@ import android.widget.Button;
 //import java.awt.Button;
 //import java.awt.Shape;
 import java.lang.Math;
-import java.lang.Byte;
-/*
-import app.akexorcist.bluetotohspp.library.BluetoothSPP;
-import app.akexorcist.bluetotohspp.library.BluetoothState;
-import app.akexorcist.bluetotohspp.library.DeviceList;
-import app.akexorcist.bluetotohspp.library.BluetoothService;
-*/
+
 import static java.lang.Math.PI;
 
 public class MainActivity extends AppCompatActivity {///李桐：希望我们能弄个text输出一下当前速度和半径
@@ -37,6 +30,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     private String BT="Bluetooth";
     private Context mContext=MainActivity.this;
     private String TAG="Main Activity";
+
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -54,17 +48,14 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             // any command for bluetooth is not available
         } else {
             BTavailable=true;
-            Log.d(BT, "onCreate: Has Bluetooth");
-            bt.setupService();
-            //bt.startService(BluetoothState.DEVICE_ANDROID);这里用的是HC-06
-            bt.startService(BluetoothState.DEVICE_OTHER);
-            Intent intent = new Intent(mContext, DeviceList.class);
-            startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
+            //Log.d(BT, "onCreate: Has Bluetooth");
             if(!bt.isBluetoothEnabled()) {
-                // Do somthing if bluetooth is disable
+                bt.enable();
             } else {
                 // Do something if bluetooth is already enable
             }
+            bt.setupService();
+            bt.startService(BluetoothState.DEVICE_OTHER);
         }
         //文本接收
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
@@ -115,7 +106,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 7F 00");
+                BluetoothSend("", "90 7F 00 00");
             }
         });
         Button button8 = (Button) findViewById(R.id.button8);

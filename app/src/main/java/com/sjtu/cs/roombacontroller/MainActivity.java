@@ -2,9 +2,8 @@ package com.sjtu.cs.roombacontroller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,9 +12,6 @@ import android.widget.Button;
 
 //import java.awt.Button;
 //import java.awt.Shape;
-import java.lang.Math;
-
-import static java.lang.Math.PI;
 
 public class MainActivity extends AppCompatActivity {///李桐：希望我们能弄个text输出一下当前速度和半径
     int widthPixels;//litong:屏幕尺寸
@@ -181,26 +177,33 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     //李桐：下面是计算速度,对应圆盘操作模式,更新this.speed和this.radius
     private void calculate(Location mlocation){
-        double x = mlocation.x() - (this.widthPixels/2);
-        double y = (this.heightPixels/2) - mlocation.y();
-        final double R = this.widthPixels/3;//R is the radius of the visible circle
+        double centerx = this.widthPixels/2;
+        double centery = 500;
+        double x = mlocation.y() - centery;
+        double y = mlocation.x() - centerx;
+        final double R = 350, k = 1.1;//R is the radius of the visible circle
         double a, r;
+        final double b = 2.0,  i = Math.PI*17.0/18;//i is the top angle
 
         if (!mlocation.conditon()){
             this.speed = 0;
             this.radius = 10000;
         }else{
             r = Math.sqrt(x*x+y*y);
-            a = -Math.signum(y)*Math.atan(x*1.0/y);
+            a = Math.atan(Math.abs(y*1.0/x));
 
-            if (r>R && r<this.widthPixels/2){//widthPixels is the max valiad radius
+            if (r>R && r<k*R){//k*R is the max valiad radius
                 this.speed = (int)Math.signum(y)*500;
             }else {
                 if (r <= R) {
                     this.speed = (int) (Math.signum(y) * r * 500 / R);
                 }else this.speed = 0;
             }
-            this.radius =(int)(2000*a/(PI/3));
+
+            if (a>i) this.radius = 10000;
+            else {
+                this.radius = (int)((2000*Math.exp(b*a)/Math.exp(b*i))*(Math.signum(-x)));
+            }
         }
     }
 

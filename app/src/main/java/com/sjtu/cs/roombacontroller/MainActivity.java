@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 7F 00");
+                BluetoothSend("", "90 7F 00 00");
             }
         });
         Button button8 = (Button) findViewById(R.id.button8);

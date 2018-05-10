@@ -123,7 +123,7 @@ public class Main2Activity extends AppCompatActivity {
     }
     //这个返回大写十六进制command，对应双轮条形UI界面
 
-    private BluetoothController BTC;
+    //private BluetoothController BTC;
     void BluetoothSend(String tag,String commandline){
         //BTC.SendMsg(commandline);
         Log.d("send", commandline);

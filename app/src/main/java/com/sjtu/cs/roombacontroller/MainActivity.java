@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     int widthPixels;//litong:屏幕尺寸
     int heightPixels;
     int speed, radius;
+    //litong:here is the yaogan location
+    int cx=this.widthPixels/2, cy = 500;
 
     Location mlocation = new Location();
 
@@ -170,7 +172,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
      * Called when the user touches the button
      */
 
-
         calculate(mlocation);
         BluetoothSend(" ",CirSend(this.speed, this.radius));
         //李桐：这里是给蓝牙传输，tag我用了空字符串
@@ -178,27 +179,35 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     }
 
     //李桐：下面是计算速度,对应圆盘操作模式,更新this.speed和this.radius
+    //最新，这里添加了给摇杆传位置的语句
     private void calculate(Location mlocation){
-        double centerx = this.widthPixels/2;
-        double centery = 500;
-        double x = mlocation.y() - centery;
-        double y = mlocation.x() - centerx;
-        final double R = 350, k = 1.1;//R is the radius of the visible circle
+        double centerx = 500;
+        double centery = this.heightPixels/2;
+        double x = mlocation.x() - centerx;
+        double y = mlocation.y() - centery;
+        final double R = 350, k = 1.5;//R is the radius of the visible circle
         double a, r;
-        final double b = 2.0,  i = Math.PI*17.0/18;//i is the top angle
+        final double b = 1.0,  i = Math.PI*8.0/18;//i is the top angle
 
         if (!mlocation.conditon()){
             this.speed = 0;
             this.radius = 10000;
+            this.cx =  this.widthPixels/2;
+            this.cy = 500;
+
         }else{
             r = Math.sqrt(x*x+y*y);
             a = Math.atan(Math.abs(y*1.0/x));
 
             if (r>R && r<k*R){//k*R is the max valiad radius
-                this.speed = (int)Math.signum(y)*500;
+                this.speed = (int)Math.signum(-y)*500;
+                this.cx = (int)(R*Math.cos(a)*Math.signum(x)+centerx);
+                this.cy = (int)(R*Math.sin(a)*Math.signum(y)+centery);
             }else {
                 if (r <= R) {
-                    this.speed = (int) (Math.signum(y) * r * 500 / R);
+                    this.speed = (int) (Math.signum(-y) * r * 500 / R);
+                    this.cx = (int)mlocation.x();
+                    this.cy = (int)mlocation.y();
                 }else this.speed = 0;
             }
 
@@ -292,6 +301,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 continue;
             }
         }
+
 
         return data;
     }

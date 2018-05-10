@@ -3,20 +3,30 @@ package com.sjtu.cs.roombacontroller;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 //import java.awt.Button;
 //import java.awt.Shape;
+import java.lang.Math;
+
+import static java.lang.Math.PI;
 
 public class MainActivity extends AppCompatActivity {///李桐：希望我们能弄个text输出一下当前速度和半径
     int widthPixels;//litong:屏幕尺寸
     int heightPixels;
-    int speed, radius;
+    int speed=0, radius=66666;
+    String temp;
+
     //litong:here is the yaogan location
     int cx=this.widthPixels/2, cy = 500;
 
@@ -29,14 +39,13 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     private Context mContext=MainActivity.this;
     private String TAG="Main Activity";
 
-    //private Axis axis = (Axis)findViewById(R.id.main_Axis);
-
     private void measure(){//这个函数用来获得屏幕尺寸
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         this.widthPixels = metrics.widthPixels;
         this.heightPixels = metrics.heightPixels;
     };
+    private TextView teller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +72,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 // Do something when data incoming
             }
         });
-
+        teller = (TextView)findViewById(R.id.teller);
+        teller.setText("temp");
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,10 +140,35 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         });
         measure();
-        //BTC.start(); 旧东西统统爆破了
-        BluetoothSend("","80 83");//李桐：这一行我写的……
-        // to tong 在连接完后可以用这个log测试一下鼠标移动输出指令的工作情况
+        BluetoothSend("","80 83");
+
+
+        /*private Handler handler = new Handler(){
+            public void handlieMessage(Message msg){
+                teller.setText(temp);
+            }
+        }*/
+
+       /* Handler handler = new Handler(){
+            public void handlerMessage(Message msg){
+                switch (msg.what){
+                    case 1:
+                        String temp = "speed:"+speed+", radius:"+radius;
+                        teller.setText(temp);
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+        };*/
     }
+
+    private Handler mhandler = new Handler(){
+        public void handleMessage(Message msg){
+            teller.setText((String)msg.obj);
+        }
+    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -160,13 +195,17 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {//李桐：触摸监听，更新mlocation中的坐标
-        switch(event.getAction()){
-            case MotionEvent.ACTION_DOWN: case MotionEvent.ACTION_MOVE:
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
                 mlocation.update(event.getX(), event.getY());
                 mlocation.update_condition(true);
                 break;
             case MotionEvent.ACTION_UP:
                 mlocation.update_condition(false);
+                break;
+            default:
+                break;
         }
     /**
      * Called when the user touches the button
@@ -278,7 +317,28 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         }else{
             Log.d(TAG, "BluetoothSend:No bluetooth connection.");
         }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (radius >= 2000) {
+                    temp = "speed:" + speed + ", radius:" + "66666";
+                }
+                else{
+                    temp = "speed:" + speed + ", radius:" + radius;}
+                Log.d("hello", temp);
+                mhandler.sendMessage(mhandler.obtainMessage(0,temp));
+                /*try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*/
+            }
+        }).start();
     }
+
+
+
     public static byte[] HexCommandtoByte(byte[] data) {
         if (data == null) {
             return null;

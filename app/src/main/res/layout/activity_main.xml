@@ -135,6 +135,19 @@
             android:layout_marginLeft="325px"
 
             android:src="@drawable/axis" />
+
+        <TextView
+            android:id="@+id/teller"
+            android:layout_width="150dp"
+            android:layout_height="230dp"
+            android:layout_marginLeft="1000px"
+            android:layout_marginTop="30px"
+            android:text="speed:00, radius:66666"
+            android:textSize="14dp"
+            android:textColor="#000000"/>
+
+
+
     </RelativeLayout>
 
     <android.support.constraint.Guideline

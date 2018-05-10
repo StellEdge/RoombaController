@@ -8,10 +8,11 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+        android:layout_width="591dp"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="100">
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="16dp">
 
 
         <!--TextView
@@ -25,96 +26,97 @@
         <!--转换按钮-->
         <Button
             android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/button4"
-            android:layout_weight="50"
-            android:text="模式转换" />
+            android:layout_width="300px"
+            android:layout_height="150px"
+
+            android:layout_below="@+id/button7"
+            android:layout_toStartOf="@+id/button7"
+            android:background="@drawable/button1"
+            android:text="模式转换"
+            android:textSize="14sp" />
         <!--转换按钮显示在正上方android:layout_below="@id/textView"-->
 
         <!--连接蓝牙-->
         <Button
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_weight="50"
-            android:background="#41bcff"
+            android:layout_width="300px"
+            android:layout_height="150px"
+            android:layout_alignTop="@id/button1"
+            android:layout_toLeftOf="@id/button1"
+            android:background="@drawable/button1"
             android:text="连接蓝牙" />
 
         <!--全速吸气按钮-->
         <Button
             android:id="@+id/button8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_weight="25"
-            android:background="#8cb324"
+            android:layout_width="300px"
+            android:layout_height="150px"
+            android:layout_above="@+id/button5"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button1"
             android:text="全速吸气" />
 
         <!--半速吸气按钮-->
         <Button
             android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/button8"
-            android:layout_weight="25"
-            android:background="#a6dc13"
+            android:layout_width="300px"
+            android:layout_height="150px"
+            android:layout_above="@+id/button6"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button1"
             android:text="半速吸气" />
         <!--android:layout_toRightOf="button4"-->
 
         <!--0.2速吸气按钮-->
         <Button
             android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/button7"
-            android:layout_weight="25"
-            android:background="#bbff00"
+            android:layout_width="300px"
+            android:layout_height="150px"
+            android:layout_above="@+id/button7"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button1"
             android:text="0.2速吸气" />
 
-        <!--关闭吸气android:layout_alignParentRight="true"-->
+        <!--关闭侧刷android:layout_alignParentRight="true"-->
         <Button
             android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_weight="25"
-            android:text="关闭吸气" />
+            android:layout_width="300px"
+            android:layout_height="150px"
+            android:layout_above="@+id/button3"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="9dp"
+            android:background="@drawable/button1"
+            android:text="关闭侧刷" />
 
         <!--开始按钮-->
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/button1"
-            android:background="#d29d1fc7"
+            android:layout_width="300px"
+            android:layout_height="150px"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/image_view1"
+            android:background="@drawable/button1"
             android:text="开始清扫" />
 
         <!--结束按钮-->
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/button1"
-            android:background="#d29d1fc7"
+            android:layout_width="300px"
+            android:layout_height="150px"
+            android:layout_alignBottom="@+id/image_view1"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button1"
             android:text="结束清扫" />
 
 
         <!--摇杆外轮廓-->
         <ImageView
             android:id="@+id/image_view1"
-            android:layout_width="700px"
-            android:layout_height="700px"
-            android:layout_marginLeft="150px"
+            android:layout_width="960px"
+            android:layout_height="960px"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="20px"
+            android:scaleType="centerCrop"
             android:src="@drawable/ring" />
 
         <!--摇杆中心-->
@@ -122,11 +124,19 @@
             android:id="@+id/image_view2"
             android:layout_width="200px"
             android:layout_height="200px"
-            android:layout_marginLeft="400px"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="400px"
+
             android:src="@drawable/axis" />
 
 
     </RelativeLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
 
 </android.support.constraint.ConstraintLayout>

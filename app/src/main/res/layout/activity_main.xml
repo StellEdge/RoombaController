@@ -127,10 +127,10 @@
         <!--摇杆中心-->
         <ImageView
             android:id="@+id/image_view2"
-            android:layout_width="200px"
-            android:layout_height="200px"
+            android:layout_width="350px"
+            android:layout_height="350px"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="400px"
+            android:layout_marginLeft="325px"
 
             android:src="@drawable/axis" />
 

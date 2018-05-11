@@ -18,7 +18,7 @@ import com.sjtu.cs.roombacontroller.R;
  * Created by StellEdge on 2018/5/10.
  */
 
-public class Axis extends ImageView {
+public class Axis extends android.support.v7.widget.AppCompatImageView {
 
     private Resources mResources;
     private Bitmap bitmap;
@@ -83,57 +83,10 @@ public class Axis extends ImageView {
         }
 
     }
-    public void SetAxis(float x,float y){
+
+    public void SetAxis(int x,int y){
         CurrentX=x;
         CurrentY=y;
-    }    /*
-    public boolean redraw(float touchx,float touchy,MotionEvent event) {
-        //当前组件的currentX、currentY两个属性
-        CurrentX = touchx;
-        CurrentY = touchy;
-        float x=CurrentX-InitX;
-        float y=CurrentY-InitY;
-        isClickView = true;
-        float r = (float) Math.sqrt(x*x+y*y);
-        float a = (float) Math.atan(Math.abs(y*1.0/x));
-        final double R = 350;
-        if (r>R) {//k*R is the max valiad radius
-            CurrentX =(float)(R * Math.cos(a) * Math.signum(x) + InitX);
-            CurrentY =(float)(R * Math.sin(a) * Math.signum(y) + InitY);
-        }
-        if (event.getAction() == MotionEvent.ACTION_UP && bitmap != null) {
-            CurrentX = InitX-bitmapWidth/2;
-            CurrentY = InitY-bitmapHeight/2;
-            isClickView = false;
-        }
-        //通知改组件重绘
-        this.invalidate();
-        //返回true表明处理方法已经处理该事件
-        return true;
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
-        //当前组件的currentX、currentY两个属性
-        CurrentX = event.getX();
-        CurrentY = event.getY();
-        float x=CurrentX-InitX;
-        float y=CurrentY-InitY;
-        isClickView = true;
-        float r = (float) Math.sqrt(x*x+y*y);
-        float a = (float) Math.atan(Math.abs(y*1.0/x));
-        final double R = 350;
-        if (r>R) {//k*R is the max valiad radius
-            CurrentX =(float)(R * Math.cos(a) * Math.signum(x) + InitX);
-            CurrentY =(float)(R * Math.sin(a) * Math.signum(y) + InitY);
-        }
-        if (event.getAction() == MotionEvent.ACTION_UP && bitmap != null) {
-            CurrentX = InitX-bitmapWidth/2;
-            CurrentY = InitY-bitmapHeight/2;
-            isClickView = false;
-        }
-        //通知改组件重绘
-        this.invalidate();
-        //返回true表明处理方法已经处理该事件
-        return true;
-    }*/
 }

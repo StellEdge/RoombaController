@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         double y = mlocation.y() - centery;
         final double R = 350, k = 1.5;//R is the radius of the visible circle
         double a, r;
-        final double b = 1.0,  i = Math.PI*8.0/18;//i is the top angle
+        final double b = 1.0,  i = Math.PI*8.0/18, j = Math.PI*1.0/18;//i is the top angle
         double tmp;
         if (!mlocation.conditon()){
             this.speed = 0;
@@ -256,11 +256,15 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
             if (a>i) this.radius = 10000;
             else {
-                tmp = (Math.exp(b*a)-1.0)/(Math.exp(b*i)-1.0);
-                this.radius = (int)(2000*tmp*(Math.signum(-x)));
+                if (a<j){
+                    this.radius = (int)(1*Math.signum(-x));
+                }else{
+                    tmp = (Math.exp(b*(a-j)) - 1.0) / (Math.exp(b * i) - 1.0);
+                    this.radius = (int) (2000 * tmp * (Math.signum(-x)));
+                }
             }
         }
-        axis.SetAxis(cx,cy);
+        axis.SetAxis((int)cx,(int)cy);
     }
 
     // Created by hd on 2018/4/30.

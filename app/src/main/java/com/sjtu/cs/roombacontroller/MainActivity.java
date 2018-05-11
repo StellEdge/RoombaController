@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         });
         measure();
-
+//
         /*private Handler handler = new Handler(){
             public void handlieMessage(Message msg){
                 teller.setText(temp);

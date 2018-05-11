@@ -2,6 +2,7 @@ package com.sjtu.cs.roombacontroller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -79,10 +80,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v){
-                //Intent intent = new Intent(mContext, Main2Activity.class);//开启下一项活动
-                //startActivity(intent);
-                //Shape circle = (Shape) findViewById(R.id.circle);
-                //v.setVisibility(0);
                 BluetoothSend("","80 83");
             }
         });
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 7F 00");
+                BluetoothSend("", "90 00 7F 00");
                 }
         });
         Button button3 = (Button) findViewById(R.id.button3);
@@ -104,14 +101,14 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 7F 40");
+                BluetoothSend("", "90 7F 00 7F");
             }
         });
         Button button6 = (Button) findViewById(R.id.button6);
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 7F 19");
+                BluetoothSend("", "90 7F 7F 00");
             }
         });
         Button button7 = (Button) findViewById(R.id.button7);

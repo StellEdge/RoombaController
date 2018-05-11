@@ -34,13 +34,11 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     int heightPixels;
     int speed=0, radius=66666;
     String temp;
-    private Context mContext=this;
-    private PaintBoard paintBoard;
+    //private PaintBoard paintBoard;
     private Canvas canvas;
-    int cx=this.widthPixels/2, cy = 500;
+    public float cx=this.widthPixels/2, cy = 500;
 
     Location mlocation = new Location();
-
     private BluetoothSPP bt = new BluetoothSPP(this);
     private boolean BTavailable;
     private String BT="Bluetooth";
@@ -54,13 +52,14 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         this.heightPixels = metrics.heightPixels;
     };
     private TextView teller;
-
+    private ImageView axis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        paintBoard = new PaintBoard(this);
+        //paintBoard = new PaintBoard(this);
         canvas = new Canvas();
+        axis = (ImageView)findViewById(R.id.axis);
         if(!bt.isBluetoothAvailable()) {
             BTavailable=false;
             //Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
@@ -172,8 +171,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     private Handler mhandler = new Handler(){
         public void handleMessage(Message msg){
             teller.setText((String)msg.obj);
-            paintBoard.draw(canvas);
-            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         }
     };
 
@@ -225,6 +222,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     }
 
     //litong:下面是摇杆的重新绘制函数
+    /*
     public class PaintBoard extends ImageView {
 
         private Resources mResources;
@@ -256,7 +254,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             canvas.drawBitmap(bitmap,cx-bitmapWidth, cy-bitmapHeight, paint);
         }
     }
-
+    */
 
     //李桐：下面是计算速度,对应圆盘操作模式,更新this.speed和this.radius
     private void calculate(Location mlocation){
@@ -374,6 +372,20 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 }*/
             }
         }).start();
+        /*
+        new Thread(new Runnable() {
+            @Override
+            private String tmp;
+            public void run() {
+                tmp=toString(cx)+" "+toString(cy);
+                mhandler.sendMessage(mhandler.obtainMessage(1,tmp));
+                /*try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();*/
     }
     //StellEdge:16进制byte字符串转byte编码
     public static byte[] HexCommandtoByte(byte[] data) {

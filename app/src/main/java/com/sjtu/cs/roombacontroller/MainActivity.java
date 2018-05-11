@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     String temp;
     //private PaintBoard paintBoard;
     private Canvas canvas;
-    public float cx=this.widthPixels/2, cy = 500;
+    public float cx=500 , cy =this.heightPixels/2;
 
     Location mlocation = new Location();
     private BluetoothSPP bt = new BluetoothSPP(this);
@@ -210,7 +210,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             default:
                 break;
         }
-        axis.SetAxis(mlocation.x(),mlocation.y());
+        //axis.SetAxis(mlocation.x(),mlocation.y());
+
     /**
      * Called when the user touches the button
      */
@@ -234,8 +235,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         if (!mlocation.conditon()){
             this.speed = 0;
             this.radius = 10000;
-            this.cx =  this.heightPixels/2;
-            this.cy = 500;
+            this.cx = 500;
+            this.cy = this.heightPixels/2;
 
         }else{
             r = Math.sqrt(x*x+y*y);
@@ -259,6 +260,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 this.radius = (int)(2000*tmp*(Math.signum(-x)));
             }
         }
+        axis.SetAxis(cx,cy);
     }
 
     // Created by hd on 2018/4/30.

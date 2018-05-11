@@ -12,7 +12,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-//import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,8 +32,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     Location mlocation = new Location();
 
-    //private BluetoothController BTC = new BluetoothController(this);
-    private BluetoothSPP bt = new BluetoothSPP(this); //暂时先用着这个外部库吧
+    private BluetoothSPP bt = new BluetoothSPP(this);
     private boolean BTavailable;
     private String BT="Bluetooth";
     private Context mContext=MainActivity.this;
@@ -51,23 +49,17 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         if(!bt.isBluetoothAvailable()) {
             BTavailable=false;
-            Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
-            // any command for bluetooth is not available
+            //Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
         } else {
             BTavailable=true;
             bt.setupService();
             bt.startService(BluetoothState.DEVICE_OTHER);
-            //Log.d(BT, "onCreate: Has Bluetooth");
             if(!bt.isBluetoothEnabled()) {
                 bt.enable();
-            } else {
-                // Do something if bluetooth is already enable
             }
-
         }
         //文本接收
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
@@ -77,14 +69,15 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         });
         teller = (TextView)findViewById(R.id.teller);
         teller.setText("temp");
-        Button button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
+        Button button_start = (Button) findViewById(R.id.button_start);
+        button_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v){
-                Intent intent = new Intent(mContext, Main2Activity.class);//开启下一项活动
-                startActivity(intent);
+                //Intent intent = new Intent(mContext, Main2Activity.class);//开启下一项活动
+                //startActivity(intent);
                 //Shape circle = (Shape) findViewById(R.id.circle);
                 //v.setVisibility(0);
+                BluetoothSend("","80 83");
             }
         });
         Button button2 = (Button) findViewById(R.id.button2);
@@ -143,7 +136,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         });
         measure();
-        BluetoothSend("","80 83");
 
 
         /*private Handler handler = new Handler(){
@@ -306,14 +298,13 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         return str;
     }
     //这个返回大写十六进制command，对应双轮条形UI界面
-
-
+    //StellEdge：不存在的
     void BluetoothSend(String tag,String commandline){
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
         //If you want to send any data. boolean parameter is mean that data will send with ending by LF and CR or not.
         //If yes your data will added by LF & CR 末尾添加回车或换行
-        Log.d(TAG, "BluetoothSend: "+commandline);
+        //Log.d(TAG, "BluetoothSend: "+commandline);
         byte[] myb=HexCommandtoByte(commandline.getBytes());
         if (bt.isServiceAvailable()) {
             bt.send(myb, false);
@@ -339,19 +330,17 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         }).start();
     }
-
-
-
+    //StellEdge:16进制byte字符串转byte编码
     public static byte[] HexCommandtoByte(byte[] data) {
         if (data == null) {
             return null;
         }
         int nLength = data.length;
-
-        String strTemString = new String(data, 0, nLength);
-        String[] strings = strTemString.split(" ");
+        String TemString = new String(data, 0, nLength);
+        String[] strings = TemString.split(" ");
         nLength = strings.length;
         data = new byte[nLength];
+
         for (int i = 0; i < nLength; i++) {
             if (strings[i].length() != 2) {
                 data[i] = 00;
@@ -364,8 +353,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 continue;
             }
         }
-
-
         return data;
     }
 }

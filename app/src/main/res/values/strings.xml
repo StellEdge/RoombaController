@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Roomba Controller</string>
     <string name="title_activity_hde_link">HDeLinkActivity</string>
+    <string name="Button_Start_Text">启动</string>
 </resources>

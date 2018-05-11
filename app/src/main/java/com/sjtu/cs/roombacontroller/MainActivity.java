@@ -6,16 +6,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-
-import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-//import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
+
+//import android.view.Window;
 //import java.awt.Button;
 //import java.awt.Shape;
 import java.lang.Math;
@@ -27,17 +29,15 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     int heightPixels;
     int speed=0, radius=66666;
     String temp;
-
-    //litong:here is the yaogan location
-    int cx=this.widthPixels/2, cy = 500;
+    //private PaintBoard paintBoard;
+    private Canvas canvas;
+    public float cx=this.widthPixels/2, cy = 500;
 
     Location mlocation = new Location();
-
-    //private BluetoothController BTC = new BluetoothController(this);
-    private BluetoothSPP bt = new BluetoothSPP(this); //暂时先用着这个外部库吧
+    private BluetoothSPP bt = new BluetoothSPP(this);
     private boolean BTavailable;
     private String BT="Bluetooth";
-    private Context mContext=MainActivity.this;
+
     private String TAG="Main Activity";
 
     private void measure(){//这个函数用来获得屏幕尺寸
@@ -47,27 +47,24 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         this.heightPixels = metrics.heightPixels;
     };
     private TextView teller;
-
+    private ImageView axis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        //paintBoard = new PaintBoard(this);
+        canvas = new Canvas();
+        axis = (ImageView)findViewById(R.id.axis);
         if(!bt.isBluetoothAvailable()) {
             BTavailable=false;
-            Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
-            // any command for bluetooth is not available
+            //Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
         } else {
             BTavailable=true;
             bt.setupService();
             bt.startService(BluetoothState.DEVICE_OTHER);
-            //Log.d(BT, "onCreate: Has Bluetooth");
             if(!bt.isBluetoothEnabled()) {
                 bt.enable();
-            } else {
-                // Do something if bluetooth is already enable
             }
-
         }
         //文本接收
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
@@ -77,14 +74,15 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         });
         teller = (TextView)findViewById(R.id.teller);
         teller.setText("temp");
-        Button button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
+        Button button_start = (Button) findViewById(R.id.button_start);
+        button_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v){
-                Intent intent = new Intent(mContext, Main2Activity.class);//开启下一项活动
-                startActivity(intent);
+                //Intent intent = new Intent(mContext, Main2Activity.class);//开启下一项活动
+                //startActivity(intent);
                 //Shape circle = (Shape) findViewById(R.id.circle);
                 //v.setVisibility(0);
+                BluetoothSend("","80 83");
             }
         });
         Button button2 = (Button) findViewById(R.id.button2);
@@ -143,7 +141,26 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         });
         measure();
-        BluetoothSend("","80 83");
+
+        /*private Handler handler = new Handler(){
+            public void handlieMessage(Message msg){
+                teller.setText(temp);
+            }
+        }*/
+
+       /* Handler handler = new Handler(){
+            public void handlerMessage(Message msg){
+                switch (msg.what){
+                    case 1:
+                        String temp = "speed:"+speed+", radius:"+radius;
+                        teller.setText(temp);
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+        };*/
     }
 
     private Handler mhandler = new Handler(){
@@ -199,8 +216,42 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         return true;
     }
 
+    //litong:下面是摇杆的重新绘制函数
+    /*
+    public class PaintBoard extends ImageView {
+
+        private Resources mResources;
+        private Bitmap bitmap;
+        private int bitmapHeight;
+        private int bitmapWidth;
+        private Context tContext;
+
+        public PaintBoard(Context context) {
+            super(context);
+            tContext=context;
+            mResources = tContext.getResources();
+            bitmap =  ((BitmapDrawable)mResources.getDrawable(R.drawable.axis)).getBitmap();
+            bitmapHeight = bitmap.getHeight();
+            bitmapWidth= bitmap.getWidth();
+        }
+        public PaintBoard(Context context, AttributeSet attrs) {
+            super(context,attrs);
+            tContext=context;
+            mResources = tContext.getResources();
+            bitmap =  ((BitmapDrawable)mResources.getDrawable(R.drawable.axis)).getBitmap();
+            bitmapHeight = bitmap.getHeight();
+            bitmapWidth= bitmap.getWidth();
+        }
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            Paint paint = new Paint();
+            canvas.drawBitmap(bitmap,cx-bitmapWidth, cy-bitmapHeight, paint);
+        }
+    }
+    */
+
     //李桐：下面是计算速度,对应圆盘操作模式,更新this.speed和this.radius
-    //最新，这里添加了给摇杆传位置的语句
     private void calculate(Location mlocation){
         double centerx = 500;
         double centery = this.heightPixels/2;
@@ -209,7 +260,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         final double R = 350, k = 1.5;//R is the radius of the visible circle
         double a, r;
         final double b = 1.0,  i = Math.PI*8.0/18;//i is the top angle
-
+        double tmp;
         if (!mlocation.conditon()){
             this.speed = 0;
             this.radius = 10000;
@@ -234,11 +285,11 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
             if (a>i) this.radius = 10000;
             else {
-                this.radius = (int)((2000*Math.exp(b*a)/Math.exp(b*i))*(Math.signum(-x)));
+                tmp = (Math.exp(b*a)-1.0)/(Math.exp(b*i)-1.0);
+                this.radius = (int)(2000*tmp*(Math.signum(-x)));
             }
         }
     }
-
 
     // Created by hd on 2018/4/30.
 
@@ -285,14 +336,13 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         return str;
     }
     //这个返回大写十六进制command，对应双轮条形UI界面
-
-
+    //StellEdge：不存在的
     void BluetoothSend(String tag,String commandline){
         //tag目前就是多留个接口
         //直接调用这个函数来进行蓝牙数据发送
         //If you want to send any data. boolean parameter is mean that data will send with ending by LF and CR or not.
         //If yes your data will added by LF & CR 末尾添加回车或换行
-        Log.d(TAG, "BluetoothSend: "+commandline);
+        //Log.d(TAG, "BluetoothSend: "+commandline);
         byte[] myb=HexCommandtoByte(commandline.getBytes());
         if (bt.isServiceAvailable()) {
             bt.send(myb, false);
@@ -317,20 +367,32 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 }*/
             }
         }).start();
+        /*
+        new Thread(new Runnable() {
+            @Override
+            private String tmp;
+            public void run() {
+                tmp=toString(cx)+" "+toString(cy);
+                mhandler.sendMessage(mhandler.obtainMessage(1,tmp));
+                /*try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();*/
     }
-
-
-
+    //StellEdge:16进制byte字符串转byte编码
     public static byte[] HexCommandtoByte(byte[] data) {
         if (data == null) {
             return null;
         }
         int nLength = data.length;
-
-        String strTemString = new String(data, 0, nLength);
-        String[] strings = strTemString.split(" ");
+        String TemString = new String(data, 0, nLength);
+        String[] strings = TemString.split(" ");
         nLength = strings.length;
         data = new byte[nLength];
+
         for (int i = 0; i < nLength; i++) {
             if (strings[i].length() != 2) {
                 data[i] = 00;
@@ -343,8 +405,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 continue;
             }
         }
-
-
         return data;
     }
 }

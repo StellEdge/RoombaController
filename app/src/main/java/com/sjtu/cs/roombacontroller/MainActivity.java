@@ -139,9 +139,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         });
         measure();
 
-        PaintBoard newView = new PaintBoard(this);
-        setContentView(newView);
-
         /*private Handler handler = new Handler(){
             public void handlieMessage(Message msg){
                 teller.setText(temp);
@@ -221,7 +218,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     //litong:下面是摇杆的重新绘制函数
     public class PaintBoard extends View {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.axis);//LITONG:yaogan
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.axis);
         int bitmapHeight = bitmap.getHeight();
         int bitmapWidth= bitmap.getWidth();
 

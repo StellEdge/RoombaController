@@ -50,6 +50,17 @@ public class Axis extends ImageView {
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        float x=CurrentX-InitX;
+        float y=CurrentY-InitY;
+        isClickView = true;
+        float r = (float) Math.sqrt(x*x+y*y);
+        float a = (float) Math.atan(Math.abs(y*1.0/x));
+        final double R = 350;
+        if (r>R) {//k*R is the max valiad radius
+            CurrentX =(float)(R * Math.cos(a) * Math.signum(x) + InitX);
+            CurrentY =(float)(R * Math.sin(a) * Math.signum(y) + InitY);
+        }
+        this.invalidate();
         if (isClickView == true && bitmap != null) {
             //创建画笔
             Paint p = new Paint();
@@ -72,11 +83,35 @@ public class Axis extends ImageView {
         }
 
     }
-    /*
-    protected void update(float x,float y){
-        cx=x;
-        cy=y;
-    }*/
+    public void SetAxis(float x,float y){
+        CurrentX=x;
+        CurrentY=y;
+    }    /*
+    public boolean redraw(float touchx,float touchy,MotionEvent event) {
+        //当前组件的currentX、currentY两个属性
+        CurrentX = touchx;
+        CurrentY = touchy;
+        float x=CurrentX-InitX;
+        float y=CurrentY-InitY;
+        isClickView = true;
+        float r = (float) Math.sqrt(x*x+y*y);
+        float a = (float) Math.atan(Math.abs(y*1.0/x));
+        final double R = 350;
+        if (r>R) {//k*R is the max valiad radius
+            CurrentX =(float)(R * Math.cos(a) * Math.signum(x) + InitX);
+            CurrentY =(float)(R * Math.sin(a) * Math.signum(y) + InitY);
+        }
+        if (event.getAction() == MotionEvent.ACTION_UP && bitmap != null) {
+            CurrentX = InitX-bitmapWidth/2;
+            CurrentY = InitY-bitmapHeight/2;
+            isClickView = false;
+        }
+        //通知改组件重绘
+        this.invalidate();
+        //返回true表明处理方法已经处理该事件
+        return true;
+    }
+
     public boolean onTouchEvent(MotionEvent event) {
         //当前组件的currentX、currentY两个属性
         CurrentX = event.getX();
@@ -100,5 +135,5 @@ public class Axis extends ImageView {
         this.invalidate();
         //返回true表明处理方法已经处理该事件
         return true;
-    }
+    }*/
 }

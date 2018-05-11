@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,15 +53,14 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         this.heightPixels = metrics.heightPixels;
     };
     private TextView teller;
-    private ImageView axis;
+    public Axis axis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //paintBoard = new PaintBoard(this);
         canvas = new Canvas();
-        axis = (ImageView)findViewById(R.id.axis);
-
+        axis = (Axis)findViewById(R.id.axis);
         if(!bt.isBluetoothAvailable()) {
             BTavailable=false;
             //Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
@@ -168,8 +168,64 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         };*/
     }
+    /*
+    public class Axis extends ImageView {
 
+        private Resources mResources;
+        private Bitmap bitmap;
+        private int bitmapHeight;
+        private int bitmapWidth;
+        private Context tContext;
+        public float InitX = 500, InitY = 540;
+        public float CurrentX, CurrentY;
+        private Rect dst = new Rect();
+
+        public Axis(Context context) {
+            super(context);
+            tContext = context;
+            mResources = tContext.getResources();
+            bitmap = ((BitmapDrawable) mResources.getDrawable(R.drawable.axis)).getBitmap();
+            bitmapHeight = bitmap.getHeight();
+            bitmapWidth = bitmap.getWidth();
+
+        }
+
+        public Axis(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            tContext = context;
+            mResources = tContext.getResources();
+            bitmap = ((BitmapDrawable) mResources.getDrawable(R.drawable.axis)).getBitmap();
+            bitmapHeight = bitmap.getHeight();
+            bitmapWidth = bitmap.getWidth();
+        }
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            CurrentX = mlocation.x();
+            CurrentY = mlocation.y();
+            float x = CurrentX - InitX;
+            float y = CurrentY - InitY;
+            float r = (float) Math.sqrt(x * x + y * y);
+            float a = (float) Math.atan(Math.abs(y * 1.0 / x));
+            final double R = 350;
+            if (r > R) {//k*R is the max valiad radius
+                CurrentX = (float) (R * Math.cos(a) * Math.signum(x) + InitX);
+                CurrentY = (float) (R * Math.sin(a) * Math.signum(y) + InitY);
+            }
+            //通知改组件重绘
+            this.invalidate();
+            if (bitmap != null) {
+                Paint p = new Paint();
+                dst.left = (int)CurrentX - 350 / 2;
+                dst.top = (int) CurrentY - 350 / 2;
+                dst.right = (int) CurrentX - 350 / 2 + 350;
+                dst.bottom = (int) CurrentY - 350 / 2 + 350;
+                canvas.drawBitmap(bitmap, null, dst, p);
+            }
+        }
+    }*/
     private Handler mhandler = new Handler(){
+        @Override
         public void handleMessage(Message msg){
             super.handleMessage(msg);
             teller.setText((String)msg.obj);
@@ -213,6 +269,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             default:
                 break;
         }
+        axis.SetAxis(mlocation.x(),mlocation.y());
     /**
      * Called when the user touches the button
      */
@@ -314,7 +371,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         //直接调用这个函数来进行蓝牙数据发送
         //If you want to send any data. boolean parameter is mean that data will send with ending by LF and CR or not.
         //If yes your data will added by LF & CR 末尾添加回车或换行
-        //Log.d(TAG, "BluetoothSend: "+commandline);
+        Log.d(TAG, "BluetoothSend: "+commandline);
         byte[] myb=HexCommandtoByte(commandline.getBytes());
         if (bt.isServiceAvailable()) {
             bt.send(myb, false);

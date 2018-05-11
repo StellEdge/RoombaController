@@ -3,11 +3,6 @@ package com.sjtu.cs.roombacontroller;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -53,14 +48,15 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         this.heightPixels = metrics.heightPixels;
     };
     private TextView teller;
-    public Axis axis;
+    private ImageView axis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //paintBoard = new PaintBoard(this);
         canvas = new Canvas();
-        axis = (Axis)findViewById(R.id.axis);
+        axis = (ImageView)findViewById(R.id.axis);
+
         if(!bt.isBluetoothAvailable()) {
             BTavailable=false;
             //Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
@@ -143,33 +139,15 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         });
         measure();
-//
-        /*private Handler handler = new Handler(){
-            public void handlieMessage(Message msg){
-                teller.setText(temp);
-            }
-        }*/
 
-       /* Handler handler = new Handler(){
-            public void handlerMessage(Message msg){
-                switch (msg.what){
-                    case 1:
-                        String temp = "speed:"+speed+", radius:"+radius;
-                        teller.setText(temp);
-                        break;
-                    default:
-                        break;
 
-                }
-            }
-        };*/
     }
 
     private Handler mhandler = new Handler(){
-        @Override
         public void handleMessage(Message msg){
             super.handleMessage(msg);
             teller.setText((String)msg.obj);
+            axis.setAxis(msg.arg1, msg.arg2);
         }
     };
 
@@ -210,7 +188,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             default:
                 break;
         }
-        axis.SetAxis(mlocation.x(),mlocation.y());
     /**
      * Called when the user touches the button
      */
@@ -229,7 +206,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         double y = mlocation.y() - centery;
         final double R = 350, k = 1.5;//R is the radius of the visible circle
         double a, r;
-        final double b = 1.0,  i = Math.PI*8.0/18;//i is the top angle
+        final double b = 1.0,  i = Math.PI*8.0/18, j = Math.PI*1.0/18;//i is the top angle
         double tmp;
         if (!mlocation.conditon()){
             this.speed = 0;
@@ -255,9 +232,15 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
             if (a>i) this.radius = 10000;
             else {
-                tmp = (Math.exp(b*a)-1.0)/(Math.exp(b*i)-1.0);
-                this.radius = (int)(2000*tmp*(Math.signum(-x)));
+                if (a<j){
+                    this.radius = (int)(1*Math.signum(-x));
+                }else{
+                    tmp = (Math.exp(b*(a-j)) - 1.0) / (Math.exp(b * i) - 1.0);
+                    this.radius = (int) (2000 * tmp * (Math.signum(-x)));
+                }
             }
+
+        }
         }
     }
 
@@ -312,7 +295,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         //直接调用这个函数来进行蓝牙数据发送
         //If you want to send any data. boolean parameter is mean that data will send with ending by LF and CR or not.
         //If yes your data will added by LF & CR 末尾添加回车或换行
-        Log.d(TAG, "BluetoothSend: "+commandline);
+        //Log.d(TAG, "BluetoothSend: "+commandline);
         byte[] myb=HexCommandtoByte(commandline.getBytes());
         if (bt.isServiceAvailable()) {
             bt.send(myb, false);

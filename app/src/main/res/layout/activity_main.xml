@@ -58,7 +58,7 @@
             android:layout_above="@+id/button5"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button1"
-            android:text="全速吸气" />
+            android:text="吸气主侧刷" />
 
         <!--半速吸气按钮-->
         <Button
@@ -68,7 +68,7 @@
             android:layout_above="@+id/button6"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button1"
-            android:text="半速吸气" />
+            android:text="吸气主刷" />
         <!--android:layout_toRightOf="button4"-->
 
         <!--0.2速吸气按钮-->
@@ -79,7 +79,7 @@
             android:layout_above="@+id/button7"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button1"
-            android:text="0.2速吸气" />
+            android:text="主侧刷" />
 
         <!--关闭侧刷android:layout_alignParentRight="true"-->
         <Button
@@ -90,7 +90,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="9dp"
             android:background="@drawable/button1"
-            android:text="关闭侧刷" />
+            android:text="主刷" />
 
         <!--开始按钮-->
         <Button
@@ -100,7 +100,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/image_view1"
             android:background="@drawable/button1"
-            android:text="开始清扫" />
+            android:text="侧刷" />
 
         <!--结束按钮-->
         <Button

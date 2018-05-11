@@ -2,9 +2,6 @@ package com.sjtu.cs.roombacontroller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -29,6 +26,9 @@ import java.io.InputStream;
 //import android.view.Window;
 //import java.awt.Button;
 //import java.awt.Shape;
+import java.lang.Math;
+
+import static java.lang.Math.PI;
 
 public class MainActivity extends AppCompatActivity {///李桐：希望我们能弄个text输出一下当前速度和半径
     int widthPixels;//litong:屏幕尺寸
@@ -84,10 +84,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v){
-                //Intent intent = new Intent(mContext, Main2Activity.class);//开启下一项活动
-                //startActivity(intent);
-                //Shape circle = (Shape) findViewById(R.id.circle);
-                //v.setVisibility(0);
                 BluetoothSend("","80 83");
             }
         });
@@ -95,7 +91,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 7F 00");
+                BluetoothSend("", "90 00 7F 00");
                 }
         });
         Button button3 = (Button) findViewById(R.id.button3);
@@ -109,14 +105,14 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 7F 40");
+                BluetoothSend("", "90 7F 00 7F");
             }
         });
         Button button6 = (Button) findViewById(R.id.button6);
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothSend("", "90 7F 7F 19");
+                BluetoothSend("", "90 7F 7F 00");
             }
         });
         Button button7 = (Button) findViewById(R.id.button7);
@@ -168,62 +164,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             }
         };*/
     }
-    /*
-    public class Axis extends ImageView {
 
-        private Resources mResources;
-        private Bitmap bitmap;
-        private int bitmapHeight;
-        private int bitmapWidth;
-        private Context tContext;
-        public float InitX = 500, InitY = 540;
-        public float CurrentX, CurrentY;
-        private Rect dst = new Rect();
-
-        public Axis(Context context) {
-            super(context);
-            tContext = context;
-            mResources = tContext.getResources();
-            bitmap = ((BitmapDrawable) mResources.getDrawable(R.drawable.axis)).getBitmap();
-            bitmapHeight = bitmap.getHeight();
-            bitmapWidth = bitmap.getWidth();
-
-        }
-
-        public Axis(Context context, AttributeSet attrs) {
-            super(context, attrs);
-            tContext = context;
-            mResources = tContext.getResources();
-            bitmap = ((BitmapDrawable) mResources.getDrawable(R.drawable.axis)).getBitmap();
-            bitmapHeight = bitmap.getHeight();
-            bitmapWidth = bitmap.getWidth();
-        }
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-            CurrentX = mlocation.x();
-            CurrentY = mlocation.y();
-            float x = CurrentX - InitX;
-            float y = CurrentY - InitY;
-            float r = (float) Math.sqrt(x * x + y * y);
-            float a = (float) Math.atan(Math.abs(y * 1.0 / x));
-            final double R = 350;
-            if (r > R) {//k*R is the max valiad radius
-                CurrentX = (float) (R * Math.cos(a) * Math.signum(x) + InitX);
-                CurrentY = (float) (R * Math.sin(a) * Math.signum(y) + InitY);
-            }
-            //通知改组件重绘
-            this.invalidate();
-            if (bitmap != null) {
-                Paint p = new Paint();
-                dst.left = (int)CurrentX - 350 / 2;
-                dst.top = (int) CurrentY - 350 / 2;
-                dst.right = (int) CurrentX - 350 / 2 + 350;
-                dst.bottom = (int) CurrentY - 350 / 2 + 350;
-                canvas.drawBitmap(bitmap, null, dst, p);
-            }
-        }
-    }*/
     private Handler mhandler = new Handler(){
         @Override
         public void handleMessage(Message msg){

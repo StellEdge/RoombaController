@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+//import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         if(!bt.isBluetoothAvailable()) {
             BTavailable=false;
@@ -57,14 +59,15 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
             // any command for bluetooth is not available
         } else {
             BTavailable=true;
+            bt.setupService();
+            bt.startService(BluetoothState.DEVICE_OTHER);
             //Log.d(BT, "onCreate: Has Bluetooth");
             if(!bt.isBluetoothEnabled()) {
                 bt.enable();
             } else {
                 // Do something if bluetooth is already enable
             }
-            bt.setupService();
-            bt.startService(BluetoothState.DEVICE_OTHER);
+
         }
         //文本接收
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
@@ -231,7 +234,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         if (!mlocation.conditon()){
             this.speed = 0;
             this.radius = 10000;
-            this.cx =  this.widthPixels/2;
+            this.cx =  this.heightPixels/2;
             this.cy = 500;
 
         }else{

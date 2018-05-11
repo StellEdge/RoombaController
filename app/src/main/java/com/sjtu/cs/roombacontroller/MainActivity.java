@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         //paintBoard = new PaintBoard(this);
         canvas = new Canvas();
         axis = (ImageView)findViewById(R.id.axis);
+
         if(!bt.isBluetoothAvailable()) {
             BTavailable=false;
             //Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
     private Handler mhandler = new Handler(){
         public void handleMessage(Message msg){
+            super.handleMessage(msg);
             teller.setText((String)msg.obj);
         }
     };
@@ -220,41 +222,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         //李桐：这里是给蓝牙传输，tag我用了空字符串
         return true;
     }
-
-    //litong:下面是摇杆的重新绘制函数
-    /*
-    public class PaintBoard extends ImageView {
-
-        private Resources mResources;
-        private Bitmap bitmap;
-        private int bitmapHeight;
-        private int bitmapWidth;
-        private Context tContext;
-
-        public PaintBoard(Context context) {
-            super(context);
-            tContext=context;
-            mResources = tContext.getResources();
-            bitmap =  ((BitmapDrawable)mResources.getDrawable(R.drawable.axis)).getBitmap();
-            bitmapHeight = bitmap.getHeight();
-            bitmapWidth= bitmap.getWidth();
-        }
-        public PaintBoard(Context context, AttributeSet attrs) {
-            super(context,attrs);
-            tContext=context;
-            mResources = tContext.getResources();
-            bitmap =  ((BitmapDrawable)mResources.getDrawable(R.drawable.axis)).getBitmap();
-            bitmapHeight = bitmap.getHeight();
-            bitmapWidth= bitmap.getWidth();
-        }
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-            Paint paint = new Paint();
-            canvas.drawBitmap(bitmap,cx-bitmapWidth, cy-bitmapHeight, paint);
-        }
-    }
-    */
 
     //李桐：下面是计算速度,对应圆盘操作模式,更新this.speed和this.radius
     private void calculate(Location mlocation){
@@ -372,20 +339,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
                 }*/
             }
         }).start();
-        /*
-        new Thread(new Runnable() {
-            @Override
-            private String tmp;
-            public void run() {
-                tmp=toString(cx)+" "+toString(cy);
-                mhandler.sendMessage(mhandler.obtainMessage(1,tmp));
-                /*try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();*/
     }
     //StellEdge:16进制byte字符串转byte编码
     public static byte[] HexCommandtoByte(byte[] data) {

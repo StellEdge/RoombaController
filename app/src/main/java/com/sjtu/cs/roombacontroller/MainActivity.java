@@ -2,22 +2,28 @@ package com.sjtu.cs.roombacontroller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.InputStream;
 
 //import android.view.Window;
 //import java.awt.Button;
@@ -28,8 +34,9 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     int heightPixels;
     int speed=0, radius=66666;
     String temp;
-    PaintBoard paintBoard = new PaintBoard(this);
-    Canvas canvas = new Canvas();
+    private Context mContext=this;
+    private PaintBoard paintBoard;
+    private Canvas canvas;
     int cx=this.widthPixels/2, cy = 500;
 
     Location mlocation = new Location();
@@ -37,7 +44,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     private BluetoothSPP bt = new BluetoothSPP(this);
     private boolean BTavailable;
     private String BT="Bluetooth";
-    private Context mContext=MainActivity.this;
+
     private String TAG="Main Activity";
 
     private void measure(){//这个函数用来获得屏幕尺寸
@@ -52,6 +59,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        paintBoard = new PaintBoard(this);
+        canvas = new Canvas();
         if(!bt.isBluetoothAvailable()) {
             BTavailable=false;
             //Log.d(BT, "onCreate: NO BLUETOOTH SUPPORT");
@@ -163,7 +172,6 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     private Handler mhandler = new Handler(){
         public void handleMessage(Message msg){
             teller.setText((String)msg.obj);
-
             paintBoard.draw(canvas);
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         }
@@ -217,16 +225,32 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     }
 
     //litong:下面是摇杆的重新绘制函数
-    public class PaintBoard extends View {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.axis);
-        int bitmapHeight = bitmap.getHeight();
-        int bitmapWidth= bitmap.getWidth();
+    public class PaintBoard extends ImageView {
 
-        public PaintBoard(MainActivity mainActivity) {
-            super(mainActivity);
+        private Resources mResources;
+        private Bitmap bitmap;
+        private int bitmapHeight;
+        private int bitmapWidth;
+        private Context tContext;
+
+        public PaintBoard(Context context) {
+            super(context);
+            tContext=context;
+            mResources = tContext.getResources();
+            bitmap =  ((BitmapDrawable)mResources.getDrawable(R.drawable.axis)).getBitmap();
+            bitmapHeight = bitmap.getHeight();
+            bitmapWidth= bitmap.getWidth();
+        }
+        public PaintBoard(Context context, AttributeSet attrs) {
+            super(context,attrs);
+            tContext=context;
+            mResources = tContext.getResources();
+            bitmap =  ((BitmapDrawable)mResources.getDrawable(R.drawable.axis)).getBitmap();
+            bitmapHeight = bitmap.getHeight();
+            bitmapWidth= bitmap.getWidth();
         }
         @Override
-        public void onDraw(Canvas canvas) {
+        protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
             Paint paint = new Paint();
             canvas.drawBitmap(bitmap,cx-bitmapWidth, cy-bitmapHeight, paint);

@@ -134,12 +134,13 @@
         <!--摇杆中心-->
         <ImageView
             android:id="@+id/image_view2"
-            android:layout_width="350px"
-            android:layout_height="350px"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="325px"
+            android:layout_marginLeft="162.5dp"
 
-            android:src="@drawable/axis" android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            android:src="@drawable/axis" />
 
         <TextView
             android:id="@+id/teller"

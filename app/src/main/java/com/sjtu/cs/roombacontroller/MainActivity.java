@@ -2,12 +2,16 @@ package com.sjtu.cs.roombacontroller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,19 +19,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+//import android.view.Window;
 //import java.awt.Button;
 //import java.awt.Shape;
-import java.lang.Math;
-
-import static java.lang.Math.PI;
 
 public class MainActivity extends AppCompatActivity {///李桐：希望我们能弄个text输出一下当前速度和半径
     int widthPixels;//litong:屏幕尺寸
     int heightPixels;
     int speed=0, radius=66666;
     String temp;
-
-    //litong:here is the yaogan location
+    PaintBoard paintBoard = new PaintBoard(this);
+    Canvas canvas = new Canvas();
     int cx=this.widthPixels/2, cy = 500;
 
     Location mlocation = new Location();
@@ -137,6 +139,8 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         });
         measure();
 
+        PaintBoard newView = new PaintBoard(this);
+        setContentView(newView);
 
         /*private Handler handler = new Handler(){
             public void handlieMessage(Message msg){
@@ -162,6 +166,9 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
     private Handler mhandler = new Handler(){
         public void handleMessage(Message msg){
             teller.setText((String)msg.obj);
+
+            paintBoard.draw(canvas);
+            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         }
     };
 
@@ -212,8 +219,25 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         return true;
     }
 
+    //litong:下面是摇杆的重新绘制函数
+    public class PaintBoard extends View {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.axis);//LITONG:yaogan
+        int bitmapHeight = bitmap.getHeight();
+        int bitmapWidth= bitmap.getWidth();
+
+        public PaintBoard(MainActivity mainActivity) {
+            super(mainActivity);
+        }
+        @Override
+        public void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            Paint paint = new Paint();
+            canvas.drawBitmap(bitmap,cx-bitmapWidth, cy-bitmapHeight, paint);
+        }
+    }
+
+
     //李桐：下面是计算速度,对应圆盘操作模式,更新this.speed和this.radius
-    //最新，这里添加了给摇杆传位置的语句
     private void calculate(Location mlocation){
         double centerx = 500;
         double centery = this.heightPixels/2;
@@ -222,7 +246,7 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
         final double R = 350, k = 1.5;//R is the radius of the visible circle
         double a, r;
         final double b = 1.0,  i = Math.PI*8.0/18;//i is the top angle
-
+        double tmp;
         if (!mlocation.conditon()){
             this.speed = 0;
             this.radius = 10000;
@@ -247,11 +271,11 @@ public class MainActivity extends AppCompatActivity {///李桐：希望我们能
 
             if (a>i) this.radius = 10000;
             else {
-                this.radius = (int)((2000*Math.exp(b*a)/Math.exp(b*i))*(Math.signum(-x)));
+                tmp = (Math.exp(b*a)-1.0)/(Math.exp(b*i)-1.0);
+                this.radius = (int)(2000*tmp*(Math.signum(-x)));
             }
         }
     }
-
 
     // Created by hd on 2018/4/30.
 

@@ -44,7 +44,7 @@ public class Axis extends ImageView {
 
     private boolean isClickView = false;//标识是否是人为点击，是则为true
 
-    @Override
+    /*@Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (isClickView == true && bmp != null) {
@@ -53,7 +53,7 @@ public class Axis extends ImageView {
             canvas.drawBitmap(bmp, currentX - (bmp.getWidth() / 2), currentY - (bmp.getHeight() / 2), p);
             isClickView = false;
         }
-    }
+    }*/
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
